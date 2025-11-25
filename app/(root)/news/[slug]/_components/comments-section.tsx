@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MessageSquare, ThumbsUp, Reply, ChevronDown, ChevronUp, Trash2, Shield, AlertTriangle } from "lucide-react"
 import { createComment, getComments, moderateComment, likeComment } from "@/lib/actions/comments"
-import { getCurrentUser } from "@/lib/auth/jwt"
+import { getCurrentUser } from "@/lib/auth/jwt-server"
 import { toast } from "sonner"
 import {
   AlertDialog,

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "./jwt";
+import { getCurrentUser } from "./jwt-server";
 
 /**
  * Permission Management System

@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { createAuditLog } from "@/lib/audit-log";
 import { emailSchema, usernameSchema } from "@/lib/security/validation";
 import { revalidatePath } from "next/cache";

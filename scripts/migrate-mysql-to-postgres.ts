@@ -23,9 +23,9 @@ const prisma = new PrismaClient();
 
 const DEFAULT_NEWS_IMAGE =
   process.env.DEFAULT_NEWS_IMAGE ||
-  'https://cdn.bawalnews.com/static/images/news-placeholder.jpg';
+  '/saturn-planet-space.jpg';
 const MYSQL_IMAGE_BASE_URL = (
-  process.env.MYSQL_IMAGE_BASE_URL || 'https://www.bawalnews.com/storage/images/'
+  process.env.MYSQL_IMAGE_BASE_URL || 'http://localhost:3000/storage/images/'
 ).replace(/\/+$/, '');
 
 // Configuration

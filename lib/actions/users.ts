@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { hasPermission } from "@/lib/auth/permissions";
 import { createAuditLog } from "@/lib/audit-log";
 import { generateUsernameFromEmail, generatePassword } from "@/lib/utils";

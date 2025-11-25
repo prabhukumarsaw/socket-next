@@ -2,7 +2,8 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { generateToken, setAuthCookie } from "@/lib/auth/jwt";
+import {  setAuthCookie } from "@/lib/auth/jwt-server";
+import { generateToken } from "@/lib/auth/jwt-core";
 import { createAuditLog } from "@/lib/audit-log";
 import { emailSchema, usernameSchema } from "@/lib/security/validation";
 import { z } from "zod";

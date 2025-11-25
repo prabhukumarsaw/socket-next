@@ -5,7 +5,7 @@
 
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { hasPermission } from "@/lib/auth/permissions";
 
 /**

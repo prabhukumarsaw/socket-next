@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { getCurrentUser } from "@/lib/auth/jwt"
+import { getCurrentUser } from "@/lib/auth/jwt-server"
 import { checkPermission } from "@/lib/auth/permissions"
 import { getUserMedia } from "@/lib/actions/media"
 import { redirect } from "next/navigation"

@@ -66,6 +66,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = news.metaTitle || news.title
   const description = news.metaDescription || news.excerpt || ""
   const image = news.ogImage || news.coverImage || ""
+  console.log(news)
 
   return {
     title,

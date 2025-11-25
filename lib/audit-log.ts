@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "./auth/jwt";
+import { getCurrentUser } from "./auth/jwt-server";
 
 /**
  * Audit Logging System

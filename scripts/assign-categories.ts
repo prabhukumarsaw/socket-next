@@ -28,7 +28,7 @@ async function ensureDefaultCoverImages(): Promise<number> {
 // Enhanced category keywords with Hindi and English terms
 const CATEGORY_KEYWORDS = {
   // झारखंड (Jharkhand)
-  'cmibm7uah0009zfsqzqrbi2v9': [
+  'cmiemmhci001fh4x8pv84gi9l': [
     // Hindi keywords
     'झारखंड', 'रांची', 'जमशेदपुर', 'धनबाद', 'बोकारो', 'देवघर', 'हजारीबाग', 
     'चाईबासा', 'कोडरमा', 'गिरिडीह', 'सिंहभूम', 'संथाल', 'आदिवासी',
@@ -42,7 +42,7 @@ const CATEGORY_KEYWORDS = {
   ],
   
   // बिहार (Bihar)
-  'cmibmc1rj0001e9lfckgg2icr': [
+  'cmiemmhd7001gh4x82zsiyhu7': [
     // Hindi keywords
     'बिहार', 'पटना', 'मुजफ्फरपुर', 'गया', 'भागलपुर', 'दरभंगा', 'पूर्णिया',
     'अररिया', 'किशanganj', 'मधुबनी', 'समस्तीपुर', 'बेगूसराय', 'सीवान',
@@ -56,7 +56,7 @@ const CATEGORY_KEYWORDS = {
   ],
   
   // राजनीति (Politics)
-  'cmibzzx8n000we9lf382xt1st': [
+  'cmiemmhdf001hh4x800wk3mgp': [
     // Hindi keywords
     'राजनीति', 'सरकार', 'मंत्री', 'चुनाव', 'विधानसभा', 'संसद', 'लोकसभा',
     'राज्यसभा', 'राजनीतिक', 'पार्टी', 'भाजपा', 'कांग्रेस', 'आप', 'जेडीयू',
@@ -70,7 +70,7 @@ const CATEGORY_KEYWORDS = {
   ],
   
   // खेल (Sports)
-  'cmic6lq6800055d5zj83tm1ok': [
+  'cmiemmhed001ih4x8px3wl5sk': [
     // Hindi keywords
     'खेल', 'क्रिकेट', 'फुटबॉल', 'हॉकी', 'टेनिस', 'बैडमिंटन', 'खिलाड़ी',
     'मैच', 'टूर्नामेंट', 'विश्व कप', 'ओलंपिक', 'एशियाई खेल', 'कमांवल',
@@ -85,7 +85,7 @@ const CATEGORY_KEYWORDS = {
   ],
   
   // देश-विदेश (Country/World)
-  'cmic6l0ql00015d5zem8n2sm7': [
+  'cmiemmhbr001eh4x8zrzkrhzt': [
     // Hindi keywords
     'देश', 'विदेश', 'अंतर्राष्ट्रीय', 'विश्व', 'भारत', 'अमेरिका', 'चीन',
     'रूस', 'पाकिस्तान', 'बांग्लादेश', 'श्रीलंका', 'नेपाल', 'विदेश मंत्री',
@@ -180,11 +180,11 @@ function findBestCategories(title: string, content: string, excerpt: string): Ca
  */
 function getCategoryName(categoryId: string): string {
   const categoryNames: Record<string, string> = {
-    'cmibm7uah0009zfsqzqrbi2v9': 'झारखंड',
-    'cmibmc1rj0001e9lfckgg2icr': 'बिहार',
-    'cmibzzx8n000we9lf382xt1st': 'राजनीति',
-    'cmic6lq6800055d5zj83tm1ok': 'खेल',
-    'cmic6l0ql00015d5zem8n2sm7': 'देश-विदेश'
+    'cmiemmhci001fh4x8pv84gi9l': 'झारखंड',
+    'cmiemmhd7001gh4x82zsiyhu7': 'बिहार',
+    'cmiemmhdf001hh4x800wk3mgp': 'राजनीति',
+    'cmiemmhed001ih4x8px3wl5sk': 'खेल',
+    'cmiemmhbr001eh4x8zrzkrhzt': 'देश-विदेश'
   };
   
   return categoryNames[categoryId] || 'Unknown';
@@ -253,7 +253,7 @@ async function assignCategoriesAutomatically() {
           }
         } else {
           // Assign default category (Politics as fallback)
-          categoriesToAssign = ['cmibzzx8n000we9lf382xt1st']; // Politics
+          categoriesToAssign = ['cmiemmhdf001hh4x800wk3mgp']; // Politics
           defaultAssignedCount++;
           console.log(`🔷 [${assignedCount + 1}] "${post.title.substring(0, 50)}..." → DEFAULT (राजनीति)`);
         }
