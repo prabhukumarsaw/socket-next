@@ -34,11 +34,14 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Custom URL validation that accepts absolute URLs, relative URLs (starting with /), or empty strings
-const urlOrEmpty = z.union([
-  z.string().url("Please enter a valid URL"),
-  z.string().regex(/^\/.*/, "Relative URL must start with /"),
-  z.literal(""),
-]).optional();
+const urlOrEmpty = z.preprocess(
+  (val) => (val === "" || val === null || val === undefined ? "" : val),
+  z.union([
+    z.literal(""), // Empty string first
+    z.string().regex(/^\/.*/, "Relative URL must start with /"), // Relative URLs
+    z.string().url("Please enter a valid URL"), // Absolute URLs
+  ])
+).optional();
 
 const createNewsSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
@@ -183,8 +186,12 @@ export function CreateNewsForm() {
   }, [setValue]);
 
   const handleImageSelect = useCallback((field: "coverImage" | "ogImage", url: string) => {
-    setValue(field, url, { shouldValidate: true });
-  }, [setValue]);
+    // Normalize the URL to ensure it starts with / if it's a relative path
+    const normalizedUrl = url && !url.startsWith("http") && !url.startsWith("/") ? `/${url}` : url;
+    setValue(field, normalizedUrl || "", { shouldValidate: true, shouldDirty: true });
+    // Trigger validation to clear any previous errors
+    trigger(field);
+  }, [setValue, trigger]);
 
   const handleImageRemove = useCallback((field: "coverImage" | "ogImage") => {
     setValue(field, "", { shouldValidate: true });

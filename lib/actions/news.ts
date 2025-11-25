@@ -12,12 +12,22 @@ import { z } from "zod";
  * Handles CRUD operations for news posts with RBAC
  */
 
+// Custom URL validation that accepts absolute URLs, relative URLs (starting with /), or empty strings
+const urlOrEmpty = z.preprocess(
+  (val) => (val === "" || val === null || val === undefined ? "" : val),
+  z.union([
+    z.literal(""), // Empty string first
+    z.string().regex(/^\/.*/, "Relative URL must start with /"), // Relative URLs
+    z.string().url("Please enter a valid URL"), // Absolute URLs
+  ])
+).optional();
+
 const createNewsSchema = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string().min(1, "Slug is required").optional(),
   content: z.string().min(1, "Content is required"),
   excerpt: z.string().optional(),
-  coverImage: z.string().url().optional().or(z.literal("")),
+  coverImage: urlOrEmpty,
   categoryIds: z.array(z.string()).min(1, "At least one category is required"),
   isPublished: z.boolean().default(false),
   isBreaking: z.boolean().default(false),
@@ -25,7 +35,7 @@ const createNewsSchema = z.object({
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),
   metaKeywords: z.string().optional(),
-  ogImage: z.string().url().optional().or(z.literal("")),
+  ogImage: urlOrEmpty,
   scheduledAt: z.string().datetime().optional(),
 });
 
@@ -35,7 +45,7 @@ const updateNewsSchema = z.object({
   slug: z.string().min(1).optional(),
   content: z.string().min(1).optional(),
   excerpt: z.string().optional(),
-  coverImage: z.string().url().optional().or(z.literal("")),
+  coverImage: urlOrEmpty,
   categoryIds: z.array(z.string()).optional(),
   isPublished: z.boolean().optional(),
   isActive: z.boolean().optional(),
@@ -44,7 +54,7 @@ const updateNewsSchema = z.object({
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),
   metaKeywords: z.string().optional(),
-  ogImage: z.string().url().optional().or(z.literal("")),
+  ogImage: urlOrEmpty,
   scheduledAt: z.string().datetime().optional(),
 });
 
