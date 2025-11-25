@@ -41,8 +41,15 @@ export function OptimizedImage({
   // Normalize relative URLs to ensure they work correctly
   const normalizedSrc = imageSrc && imageSrc.startsWith("/storage/") ? imageSrc : imageSrc;
 
+  // If fill prop is used, ensure parent has proper dimensions
+  const hasFill = props.fill === true;
+  
   return (
-    <div className={cn("relative overflow-hidden bg-muted/30", containerClassName)}>
+    <div className={cn(
+      "relative overflow-hidden bg-muted/30",
+      hasFill && "absolute inset-0 w-full h-full",
+      containerClassName
+    )}>
       {error ? (
         <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
           <span className="text-xs">Image not found</span>

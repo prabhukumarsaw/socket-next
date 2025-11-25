@@ -117,9 +117,9 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full">
       {/* Header */}
-      <div className="border-b bg-gradient-to-r from-background to-muted/30">
+      <div className="border-b bg-gradient-to-r from-background to-muted/30 w-full">
         <div className="p-6 md:p-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
@@ -221,7 +221,7 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
                     className="group relative bg-card border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-200 cursor-pointer"
                     onClick={() => { setSelectedMedia(item); setDetailOpen(true) }}
                   >
-                    <div className="aspect-square relative bg-background">
+                    <div className="aspect-square relative bg-background w-full">
                       {item.resourceType === "image" ? (
                         <OptimizedImage 
                           src={item.url} 
@@ -231,7 +231,7 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
                           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted/50">
+                        <div className="absolute inset-0 w-full h-full flex items-center justify-center text-muted-foreground bg-muted/50">
                           {getIcon(item.resourceType)}
                         </div>
                       )}
@@ -303,8 +303,8 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
           </div>
         </TabsContent>
 
-        <TabsContent value="upload" className="mt-0">
-          <div className="p-6 md:p-8 max-w-2xl mx-auto">
+        <TabsContent value="upload" className="mt-0 flex-1">
+          <div className="p-6 md:p-8 max-w-4xl mx-auto w-full">
             <MediaUploader />
           </div>
         </TabsContent>
@@ -313,13 +313,16 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
       {/* Detail Dialog */}
       <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
         <DialogContent className="max-w-4xl p-0 gap-0 overflow-hidden">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Media Details</DialogTitle>
+          </DialogHeader>
           {selectedMedia && (
             <div className="flex flex-col md:flex-row">
-              <div className="flex-1 bg-background min-h-[300px] md:min-h-[450px] relative">
+              <div className="flex-1 bg-background min-h-[300px] md:min-h-[450px] relative w-full">
                 {selectedMedia.resourceType === "image" ? (
                   <OptimizedImage src={selectedMedia.url} alt={selectedMedia.name} fill className="object-contain" sizes="50vw" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-muted/50">{getIcon(selectedMedia.resourceType)}</div>
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-muted/50">{getIcon(selectedMedia.resourceType)}</div>
                 )}
               </div>
               <div className="w-full md:w-[320px] p-6 space-y-6 border-t md:border-t-0 md:border-l">

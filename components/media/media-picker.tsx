@@ -214,7 +214,7 @@ export function MediaPicker({
                         onClick={() => handleSelect(item)}
                       >
                         {item.resourceType === "image" ? (
-                          <div className="aspect-square relative bg-background">
+                          <div className="aspect-square relative bg-background w-full">
                             <OptimizedImage
                               src={item.url}
                               alt={item.name}
@@ -224,7 +224,7 @@ export function MediaPicker({
                             />
                           </div>
                         ) : (
-                          <div className="aspect-square bg-muted/50 flex items-center justify-center">
+                          <div className="aspect-square bg-muted/50 flex items-center justify-center w-full">
                             <ImageIcon className="h-12 w-12 text-muted-foreground" />
                           </div>
                         )}
