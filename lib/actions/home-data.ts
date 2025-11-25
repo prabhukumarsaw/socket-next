@@ -121,8 +121,8 @@ export const getContentSidebarData = cache(async () => {
       // JHARKHAND category - Featured Article
       getNewsByCategory(
         { slug: "jharkhand" },
-        { limit: 1, includeAuthor: true, includeCategories: true, includeContent: false }
-      ).catch(() => ({ data: [], pagination: { page: 1, limit: 1, total: 0, totalPages: 0, hasNext: false, hasPrev: false } })),
+        { limit: 5, includeAuthor: true, includeCategories: true, includeContent: false }
+      ).catch(() => ({ data: [], pagination: { page: 1, limit: 5, total: 0, totalPages: 0, hasNext: false, hasPrev: false } })),
       
       // BIHAR category - Politics Articles  
       getNewsByCategory(
@@ -153,21 +153,19 @@ export const getContentSidebarData = cache(async () => {
     const featured = results[3].status === "fulfilled" ? results[3].value : [];
     const columns = results[4].status === "fulfilled" ? results[4].value : [];
     const opinion = results[5].status === "fulfilled" ? results[5].value : [];
-    const sports = results[5].status === "fulfilled" ? results[5].value : [];
+    const jharkhandFeatured = jharkhand.length > 0 ? mapToContentSidebarArticle(jharkhand[0]) : undefined;
 
-    // Get top headlines from recent/breaking news
-    const topHeadlinesRaw = recent.slice(0, 4).length > 0 
-      ? recent.slice(0, 4)
-      : featured.slice(0, 4);
-    
+    const jharkhandSupportingSource = jharkhand.length > 1
+      ? jharkhand.slice(1, 5)
+      : recent.slice(0, 4);
+    const jharkhandSupportingArticles = mapArrayToContentSidebarArticles(jharkhandSupportingSource);
+
     // Map to component format using unified mapper
-    const topHeadlines: ContentSidebarArticle[] = mapArrayToContentSidebarArticles(topHeadlinesRaw);
-    const featuredArticle = jharkhand.length > 0 
-      ? mapToContentSidebarArticle(jharkhand[0])
-      : (recent.length > 0 ? mapToContentSidebarArticle(recent[0]) : undefined);
+    const topHeadlines: ContentSidebarArticle[] = jharkhandSupportingArticles;
+    const featuredArticle = jharkhandFeatured ?? (recent.length > 0 ? mapToContentSidebarArticle(recent[0]) : undefined);
     
-    const stateArticles: ContentSidebarArticle[] = mapArrayToContentSidebarArticles(bihar.slice(0, 6));
-    const moreNewsArticles: ContentSidebarArticle[] = mapArrayToContentSidebarArticles(bihar.slice(3, 6));
+    const stateArticles: ContentSidebarArticle[] = mapArrayToContentSidebarArticles(bihar.slice(0, 4));
+    const moreNewsArticles: ContentSidebarArticle[] = mapArrayToContentSidebarArticles(bihar.slice(4, 10));
     
     const sidebarTopArticle: ContentSidebarSidebarItem | undefined = featured.length > 0
       ? mapToSidebarItem(featured[0])

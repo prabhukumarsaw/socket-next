@@ -150,12 +150,12 @@ export const getCategorySectionData = cache(async () => {
       ? results[2].value.data 
       : [];
 
-      const crimeResult = results[2].status === "fulfilled" && "data" in results[2].value 
-      ? results[2].value.data 
+    const crimeResult = results[3].status === "fulfilled" && "data" in results[3].value 
+      ? results[3].value.data 
       : [];
-    const topTrendingNews = results[3].status === "fulfilled" ? results[3].value : [];
-    const exclusiveNews = results[4].status === "fulfilled" ? results[4].value : [];
-    const sidebarBottomNews = results[5].status === "fulfilled" ? results[5].value : [];
+    const topTrendingNews = results[4].status === "fulfilled" ? results[4].value : [];
+    const exclusiveNews = results[5].status === "fulfilled" ? results[5].value : [];
+    const sidebarBottomNews = results[6].status === "fulfilled" ? results[6].value : [];
 
     // Get category names
     const politicsTitle = politicsResult[0]?.categories?.[0]?.menu?.name?.toUpperCase() || "राजनीति";

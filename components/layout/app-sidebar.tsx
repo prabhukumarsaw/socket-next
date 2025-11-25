@@ -93,7 +93,6 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   permissions: Icons.billing,
   logs: Icons.page,
   // Fallback icons for common cases
-  kanban: Icons.kanban,
   product: Icons.product,
   media: Icons.media,
   employee: Icons.employee,
