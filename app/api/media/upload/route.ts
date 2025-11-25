@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { hasPermission } from "@/lib/auth/permissions";
 import { uploadMedia } from "@/lib/actions/media";
 

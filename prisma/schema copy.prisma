@@ -254,7 +254,7 @@ model News {
   slug            String   @unique
   content         String   @db.Text // Rich text content from Lexical editor
   excerpt         String?  @db.Text // Short description
-  coverImage      String?  // Cloudinary URL
+  coverImage      String?  
   isPublished     Boolean  @default(false)
   isActive        Boolean  @default(true)
   isBreaking      Boolean  @default(false) // Breaking news flag

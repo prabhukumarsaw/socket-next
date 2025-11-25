@@ -63,15 +63,6 @@ export function shareOnWhatsApp(data: ShareData) {
 }
 
 /**
- * Share via WhatsApp
- */
-// export function shareOnWhatsApp(data: ShareData) {
-//   const text = `${data.title}${data.description ? ` - ${data.description}` : ""} ${data.url}`;
-//   const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-//   window.open(url, "_blank", "width=600,height=400");
-// }
-
-/**
  * Copy link to clipboard
  */
 export async function copyToClipboard(url: string): Promise<boolean> {

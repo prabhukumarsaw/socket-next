@@ -29,11 +29,7 @@ const envSchema = z.object({
   DEFAULT_ADMIN_EMAIL: z.string().email().optional(),
   DEFAULT_ADMIN_USERNAME: z.string().min(3).optional(),
   DEFAULT_ADMIN_PASSWORD: z.string().min(8).optional(),
-  
-  // Cloudinary Configuration
-  CLOUDINARY_CLOUD_NAME: z.string().optional(),
-  CLOUDINARY_API_KEY: z.string().optional(),
-  CLOUDINARY_API_SECRET: z.string().optional(),
+
 });
 
 /**
@@ -56,9 +52,7 @@ export const env = (() => {
       DEFAULT_ADMIN_EMAIL: process.env.DEFAULT_ADMIN_EMAIL,
       DEFAULT_ADMIN_USERNAME: process.env.DEFAULT_ADMIN_USERNAME,
       DEFAULT_ADMIN_PASSWORD: process.env.DEFAULT_ADMIN_PASSWORD,
-      CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
-      CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
-      CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+  
     });
   } catch (error) {
     if (error instanceof z.ZodError) {

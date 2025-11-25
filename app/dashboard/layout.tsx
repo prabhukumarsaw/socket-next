@@ -1,6 +1,6 @@
 import KBar from '@/components/kbar';
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { getUserMenus } from "@/lib/auth/permissions";
 import AppSidebar from '@/components/layout/app-sidebar';
 import Header from '@/components/layout/header';

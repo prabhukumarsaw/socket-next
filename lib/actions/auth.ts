@@ -2,7 +2,8 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { generateToken, setAuthCookie, removeAuthCookie, getCurrentUser } from "@/lib/auth/jwt";
+import { generateToken } from "@/lib/auth/jwt-core";
+import { setAuthCookie, removeAuthCookie, getCurrentUser } from "@/lib/auth/jwt-server";
 import { createAuditLog } from "@/lib/audit-log";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
