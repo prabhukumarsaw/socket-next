@@ -221,11 +221,17 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
                     className="group relative bg-card border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-200 cursor-pointer"
                     onClick={() => { setSelectedMedia(item); setDetailOpen(true) }}
                   >
-                    <div className="aspect-square relative bg-muted/50">
+                    <div className="aspect-square relative bg-background">
                       {item.resourceType === "image" ? (
-                        <OptimizedImage src={item.url} alt={item.name} fill className="object-cover" sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw" />
+                        <OptimizedImage 
+                          src={item.url} 
+                          alt={item.name} 
+                          fill 
+                          className="object-cover" 
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                        />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted/50">
                           {getIcon(item.resourceType)}
                         </div>
                       )}
@@ -257,11 +263,11 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
                 <div className="divide-y">
                   {media.map((item) => (
                     <div key={item.id} className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors group">
-                      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-muted shrink-0">
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-background shrink-0">
                         {item.resourceType === "image" ? (
                           <OptimizedImage src={item.url} alt={item.name} fill className="object-cover" sizes="64px" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">{getIcon(item.resourceType)}</div>
+                          <div className="w-full h-full flex items-center justify-center bg-muted/50">{getIcon(item.resourceType)}</div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -309,11 +315,11 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
         <DialogContent className="max-w-4xl p-0 gap-0 overflow-hidden">
           {selectedMedia && (
             <div className="flex flex-col md:flex-row">
-              <div className="flex-1 bg-muted/30 min-h-[300px] md:min-h-[450px] relative">
+              <div className="flex-1 bg-background min-h-[300px] md:min-h-[450px] relative">
                 {selectedMedia.resourceType === "image" ? (
                   <OptimizedImage src={selectedMedia.url} alt={selectedMedia.name} fill className="object-contain" sizes="50vw" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">{getIcon(selectedMedia.resourceType)}</div>
+                  <div className="w-full h-full flex items-center justify-center bg-muted/50">{getIcon(selectedMedia.resourceType)}</div>
                 )}
               </div>
               <div className="w-full md:w-[320px] p-6 space-y-6 border-t md:border-t-0 md:border-l">

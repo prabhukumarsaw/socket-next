@@ -38,27 +38,42 @@ export function OptimizedImage({
   const imageSrc = error ? fallbackSrc : src;
   const placeholder = blurDataUrl || DEFAULT_BLUR_DATA_URL;
 
+  // Normalize relative URLs to ensure they work correctly
+  const normalizedSrc = imageSrc && imageSrc.startsWith("/storage/") ? imageSrc : imageSrc;
+
   return (
-    <div className={cn("relative overflow-hidden", containerClassName)}>
-      <Image
-        src={imageSrc}
-        alt={alt}
-        className={cn(
-          "duration-500 ease-in-out",
-          isLoading ? "scale-105 blur-sm" : "scale-100 blur-0",
-          className
-        )}
-        placeholder="blur"
-        blurDataURL={placeholder}
-        loading="lazy"
-        unoptimized // Serve directly without Next.js optimization (for CDN/local)
-        onLoad={() => setIsLoading(false)}
-        onError={() => {
-          setError(true);
-          setIsLoading(false);
-        }}
-        {...props}
-      />
+    <div className={cn("relative overflow-hidden bg-muted/30", containerClassName)}>
+      {error ? (
+        <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
+          <span className="text-xs">Image not found</span>
+        </div>
+      ) : (
+        <Image
+          src={normalizedSrc}
+          alt={alt}
+          className={cn(
+            "duration-300 ease-in-out transition-opacity",
+            isLoading ? "opacity-0" : "opacity-100",
+            className
+          )}
+          placeholder="blur"
+          blurDataURL={placeholder}
+          loading="lazy"
+          unoptimized // Serve directly without Next.js optimization (for CDN/local)
+          onLoad={() => setIsLoading(false)}
+          onError={(e) => {
+            console.error("Image load error:", normalizedSrc, e);
+            setError(true);
+            setIsLoading(false);
+          }}
+          {...props}
+        />
+      )}
+      {isLoading && !error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        </div>
+      )}
     </div>
   );
 }
