@@ -21,6 +21,13 @@ import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
 
 const prisma = new PrismaClient();
 
+const DEFAULT_NEWS_IMAGE =
+  process.env.DEFAULT_NEWS_IMAGE ||
+  'https://cdn.bawalnews.com/static/images/news-placeholder.jpg';
+const MYSQL_IMAGE_BASE_URL = (
+  process.env.MYSQL_IMAGE_BASE_URL || 'https://www.bawalnews.com/storage/images/'
+).replace(/\/+$/, '');
+
 // Configuration
 interface MySQLConfig {
   host: string;
@@ -196,30 +203,24 @@ function convertContentToLexical(htmlContent: string | null | undefined): string
 }
 
 /**
- * Construct image URL from image name
- * Update BASE_IMAGE_URL to match your Laravel storage path
+ * Construct image URL from image name with automatic fallback to default image
  */
-function constructImageUrl(imageName: string | null | undefined): string | null {
-  if (!imageName || imageName.trim() === '') return null;
+function constructImageUrl(imageName: string | null | undefined): string {
+  if (!imageName || imageName.trim() === '') {
+    return DEFAULT_NEWS_IMAGE;
+  }
 
   const cleaned = imageName.trim();
 
   // Check if it's already a full URL
-  if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
+  if (/^https?:\/\//i.test(cleaned)) {
     return cleaned;
   }
 
   // Remove leading slash if present
   const path = cleaned.startsWith('/') ? cleaned.substring(1) : cleaned;
 
-  // Construct URL - UPDATE THIS BASE URL TO MATCH YOUR LARAVEL STORAGE
-  // Examples:
-  // - https://www.bawalnews.com/storage/images/
-  // - https://www.yoursite.com/public/uploads/
-  // - /storage/images/
-  const BASE_IMAGE_URL = process.env.MYSQL_IMAGE_BASE_URL || 'https://www.bawalnews.com/storage/images/';
-  
-  return BASE_IMAGE_URL + path;
+  return `${MYSQL_IMAGE_BASE_URL}/${path}`;
 }
 
 /**
@@ -413,7 +414,7 @@ async function migratePost(
         slug: uniqueSlug,
         excerpt: excerpt || undefined,
         content,
-        coverImage: coverImage || undefined,
+        coverImage,
         isPublished: post.post_status === 'publish',
         isActive: post.post_status === 'publish',
         isBreaking: false,

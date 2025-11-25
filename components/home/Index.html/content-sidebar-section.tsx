@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Play } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
 import SectionHeader from "../SectionHeader"
 
 interface Article {
@@ -40,14 +39,9 @@ export function ContentSidebarSection({
   sidebarColumns = [],
   sidebarOpinion,
 }: ContentSidebarSectionProps) {
-
-  console.log("topHeadlines", topHeadlines);
-  console.log("featuredArticle", featuredArticle);
-  console.log("stateArticles", stateArticles);
-  console.log("moreNewsArticles", moreNewsArticles);
-  console.log("sidebarTopArticle", sidebarTopArticle);
-  console.log("sidebarColumns", sidebarColumns);
-  console.log("sidebarOpinion", sidebarOpinion);
+  const jharkhandSupporting = topHeadlines.slice(0, 4)
+  const biharPrimary = stateArticles.slice(0, 4)
+  const biharSecondary = moreNewsArticles.slice(0, 6)
   return (
     <div className="w-full border-t-2 border-black mb-6">
       <div className="container mx-auto px-4 py-8 lg:py-12">
@@ -116,119 +110,86 @@ export function ContentSidebarSection({
                     </Link>
                   </div>
                 </div>
+
+                {jharkhandSupporting.length > 0 && (
+                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-border">
+                    {jharkhandSupporting.map((article) => (
+                      <Link key={article.id} href={`/news/${article.id}`} className="group block">
+                        <span className="headlines-title transition-colors duration-200 group-hover:text-primary">
+                          {article.title}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </article>
             )}
 
-            {/* Top Headlines Row - 4 Columns */}
-            {topHeadlines.length > 0 && (
-              <div className="pb-8 border-b border-border">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                  {topHeadlines.map((article, index) => (
-                    <article
-                      key={article.id}
-                      className=" sm:border-r border-border pr-4 last:border-none"
-                    >
-                      <Link href={`/news/${article.id}`} className="group">
-                        <span className="headlines-title transition-colors duration-200">
-                          {article.title}
-                        </span>
-                        <p className="text-muted-foreground">{article.category}</p>
-                      </Link>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-            )}
-
             {/* Politics and More News - Two Column Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-6 ">
-              {/* Politics Section - Left Column */}
-              {stateArticles.length > 0 && (
-                <section>
-
-                  <SectionHeader title="BIHAR" />
-                  <div className="space-y-4">
-                    {stateArticles.map((article, index) => (
-                      <article key={article.id} className="flex gap-4 group cursor-pointer items-center">
-                        <div className="relative w-24 h-16 flex-shrink-0 overflow-hidden">
-                          <Image
-                            src={article.image || "/placeholder.svg"}
-                            alt={article.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        </div>
-                        <h4 className="font-bold text-sm leading-snug group-hover:text-blue-600 transition-colors line-clamp-3">
-                          {article.title}
-                        </h4>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
-
-              {/* More News Section - Right Column */}
-              {moreNewsArticles.length > 0 && (
-                <section>
-
-                  <div className="space-y-8  border-l px-4">
-                    {moreNewsArticles.slice(6, 12).map((article, index) => (
-                      <article key={article.id}>
-                        {/* First article with image and excerpt */}
-                        {index === 0 && article.image ? (
-                          <div className="space-y-4">
-                            <Link href={`/news/${article.id}`} className="group">
-                              <h3 className="font-serif text-xl lg:text-2xl font-bold leading-tight text-foreground group-hover:text-primary transition-colors duration-200">
-                                {article.title}
-                              </h3>
-                            </Link>
-                            <Link href={`/news/${article.id}`} className="group block">
-                              <div className="relative aspect-video bg-muted rounded-sm overflow-hidden">
-                                <Image
-                                  src={article.image || "/placeholder.svg"}
-                                  alt={article.title}
-                                  fill
-                                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                  sizes="(max-width: 1024px) 100vw, 40vw"
-                                />
-                              </div>
-                            </Link>
-                            {article.excerpt && (
-                              <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
-                            )}
+            {(biharPrimary.length > 0 || biharSecondary.length > 0) && (
+              <section>
+                <SectionHeader title="BIHAR" />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-6">
+                  {biharPrimary.length > 0 && (
+                    <div className="space-y-4">
+                      {biharPrimary.map((article) => (
+                        <article key={article.id} className="flex gap-4 group cursor-pointer items-center">
+                          <div className="relative w-24 h-16 flex-shrink-0 overflow-hidden">
+                            <Image
+                              src={article.image || "/placeholder.svg"}
+                              alt={article.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
                           </div>
-                        ) : (
-                          // Other articles - text only
-                          <Link href={`/news/${article.id}`} className="group">
-                            <span className="headlines-sub-title leading-tight text-foreground group-hover:text-primary transition-colors duration-200">
-                              {article.title}
-                            </span>
-                          </Link>
-                        )}
-                        {index < 4 && <div className="mt-4 border-b border-border" />}
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
-            </div>
+                          <h4 className="font-bold text-sm leading-snug group-hover:text-blue-600 transition-colors line-clamp-3">
+                            {article.title}
+                          </h4>
+                        </article>
+                      ))}
+                    </div>
+                  )}
 
-            {/* Bottom Row - 3 Column Grid */}
-            {moreNewsArticles.length > 5 && (
-              <div className="pt-10 border-t border-border">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                  {moreNewsArticles.slice(5, 8).map((article) => (
-                    <article key={article.id}>
-                      <Link href={`/news/${article.id}`} className="group">
-                        <span className="headlines-title leading-tight text-foreground group-hover:text-primary transition-colors duration-200">
-                          {article.title}
-                        </span>
-                      </Link>
-                    </article>
-                  ))}
+                  {biharSecondary.length > 0 && (
+                    <div className="space-y-8 border-l border-border lg:pl-6">
+                      {biharSecondary.map((article, index) => (
+                        <article key={article.id} className="pb-4 last:pb-0 border-border">
+                          {index === 0 && article.image ? (
+                            <div className="space-y-4">
+                              <Link href={`/news/${article.id}`} className="group">
+                                <h3 className="font-serif text-xl lg:text-2xl font-bold leading-tight text-foreground group-hover:text-primary transition-colors duration-200">
+                                  {article.title}
+                                </h3>
+                              </Link>
+                              <Link href={`/news/${article.id}`} className="group block">
+                                <div className="relative aspect-video bg-muted rounded-sm overflow-hidden">
+                                  <Image
+                                    src={article.image || "/placeholder.svg"}
+                                    alt={article.title}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                  />
+                                </div>
+                              </Link>
+                              {article.excerpt && (
+                                <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
+                              )}
+                            </div>
+                          ) : (
+                            <Link href={`/news/${article.id}`} className="group block">
+                              <span className="headlines-sub-title leading-tight text-foreground group-hover:text-primary transition-colors duration-200">
+                                {article.title}
+                              </span>
+                            </Link>
+                          )}
+                          {index < biharSecondary.length - 1 && <div className="mt-4 border-b border-border" />}
+                        </article>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
+              </section>
             )}
           </div>
           <span className="border-r " />

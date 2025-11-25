@@ -1,7 +1,6 @@
 import { FeaturedSection } from "./featured-section"
 import { ContentSidebarSection } from "./content-sidebar-section"
 import { CategoryNewsSection } from "./category-news-section"
-import { sideArticlesData, rightArticlesData } from "@/constants/dummy-news-data"
 import { OneSection } from "./section-one"
 import Ads from "@/components/ads/page"
 import { getHomeFeaturedData, getContentSidebarData, getTechnologySectionData } from "@/lib/actions/home-data"

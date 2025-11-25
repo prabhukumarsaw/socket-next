@@ -2,6 +2,28 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+const DEFAULT_NEWS_IMAGE =
+  process.env.DEFAULT_NEWS_IMAGE ||
+  'https://cdn.bawalnews.com/static/images/news-placeholder.jpg';
+
+async function ensureDefaultCoverImages(): Promise<number> {
+  const placeholder = DEFAULT_NEWS_IMAGE;
+
+  const result = await prisma.news.updateMany({
+    where: {
+      OR: [{ coverImage: null }, { coverImage: '' }],
+    },
+    data: {
+      coverImage: placeholder,
+    },
+  });
+
+  if (result.count > 0) {
+    console.log(`🖼️ Applied default cover image to ${result.count} posts missing artwork`);
+  }
+
+  return result.count;
+}
 
 // Enhanced category keywords with Hindi and English terms
 const CATEGORY_KEYWORDS = {
