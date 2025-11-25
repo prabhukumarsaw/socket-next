@@ -21,33 +21,33 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
     image: article.image,
   }
   return (
-    <div className="mb-8">
+    <div className="mb-8 md:mb-12">
       {/* Breadcrumb */}
-      <div className="flex items-center text-sm text-muted-foreground mb-4 overflow-x-auto whitespace-nowrap">
-        <Link href="/" className="hover:text-foreground">
+      <div className="flex items-center text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 overflow-x-auto whitespace-nowrap">
+        <Link href="/" className="hover:text-foreground transition-colors">
           Home
         </Link>
         <span className="mx-2">»</span>
-        <Link href={`/news/${article.category}`} className="hover:text-foreground capitalize">
+        <Link href={`/news/${article.category}`} className="hover:text-foreground capitalize transition-colors">
           {article.category}
         </Link>
         <span className="mx-2">»</span>
-        <span className="text-foreground truncate max-w-[300px]">{article.title}</span>
+        <span className="text-foreground truncate max-w-[200px] sm:max-w-[300px]">{article.title}</span>
       </div>
 
       {/* Category Badge */}
-      <Badge variant="default" className="mb-4 bg-blue-500 hover:bg-blue-600 text-white uppercase rounded-sm">
+      <Badge variant="default" className="mb-4 sm:mb-6 bg-blue-500 hover:bg-blue-600 text-white uppercase rounded-sm text-xs sm:text-sm px-2 sm:px-3 py-1">
         {article.category}
       </Badge>
 
       {/* Title */}
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-foreground">{article.title}</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.2] mb-4 sm:mb-6 text-foreground tracking-tight font-hindi">{article.title}</h1>
 
       {/* Excerpt */}
-      <p className="text-xl text-muted-foreground mb-6 leading-relaxed">{article.excerpt}</p>
+      <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-[1.7] font-hindi">{article.excerpt}</p>
 
       {/* Meta Data Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-b border-border py-4 mb-8 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-b border-border py-4 sm:py-5 mb-6 sm:mb-8 gap-4">
         <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 rounded-full overflow-hidden bg-muted">
             <Image src="/author-avatar.png" alt={article.author} fill className="object-cover" />
@@ -77,7 +77,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
       </div>
 
       {/* Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
         <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
           <span className="font-bold text-sm mr-2 flex items-center gap-1 shrink-0">
             <Share2 className="h-4 w-4" /> Share
@@ -189,13 +189,14 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
       </div>
 
       {/* Main Image */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg shadow-md mb-8">
+      <div className="relative aspect-[16/9] w-full min-h-[200px] sm:min-h-[300px] md:min-h-[400px] overflow-hidden rounded-lg sm:rounded-xl shadow-lg mb-6 sm:mb-8 bg-muted/30">
         <Image
           src={article.image || "/placeholder.svg?height=600&width=1200"}
           alt={article.title}
           fill
           className="object-cover hover:scale-105 transition-transform duration-700"
           priority
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
         />
       </div>
     </div>

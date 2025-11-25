@@ -14,46 +14,46 @@ export function Footer() {
     const company = [
         {
             title: "About Us",
-            href: "#",
+            href: "/about",
         },
         {
-            title: "Careers",
-            href: "#",
+            title: "Contact Us",
+            href: "/contact",
         },
         {
-            title: "Brand assets",
-            href: "#",
+            title: "Advertising",
+            href: "/ads",
         },
         {
             title: "Privacy Policy",
-            href: "#",
+            href: "/privacy",
         },
         {
-            title: "Terms of Service",
-            href: "#",
+            title: "Terms & Conditions",
+            href: "/terms",
+        },
+        {
+            title: "DMCA",
+            href: "/dmca",
+        },
+        {
+            title: "Cookie Policy",
+            href: "/cookies",
         },
     ];
 
     const resources = [
         {
-            title: "Blog",
-            href: "#",
-        },
-        {
-            title: "Help Center",
-            href: "#",
+            title: "Search",
+            href: "/search",
         },
         {
             title: "Contact Support",
-            href: "#",
+            href: "/contact",
         },
         {
-            title: "Community",
-            href: "#",
-        },
-        {
-            title: "Security",
-            href: "#",
+            title: "Advertising",
+            href: "/ads",
         },
     ];
 

@@ -58,6 +58,11 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        sans: ["var(--font-sans)", "var(--font-hindi)", "sans-serif"],
+        hindi: ["var(--font-hindi)", "var(--font-sans)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+      },
     },
   },
    plugins: [

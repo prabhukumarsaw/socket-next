@@ -24,8 +24,21 @@ import {
 } from "@/components/ui/select";
 import { MediaPicker } from "@/components/media/media-picker";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { X } from "lucide-react";
+import { X, Image as ImageIcon, Link2, Calendar, MapPin, Settings, Eye, EyeOff } from "lucide-react";
 import { datetimeLocalToISO, isoToDatetimeLocal, validateDateRange } from "@/lib/utils/datetime-utils";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
+import { useCallback } from "react";
+
+// Custom URL validation that accepts absolute URLs, relative URLs (starting with /), or empty strings
+const urlOrEmpty = z.preprocess(
+  (val) => (val === "" || val === null || val === undefined ? "" : val),
+  z.union([
+    z.literal(""), // Empty string first
+    z.string().regex(/^\/.*/, "Relative URL must start with /"), // Relative URLs
+    z.string().url("Please enter a valid URL"), // Absolute URLs
+  ])
+).optional();
 
 // Custom datetime validation for datetime-local input
 const datetimeLocalSchema = z
@@ -49,7 +62,7 @@ const updateAdvertisementSchema = z
     id: z.string(),
     title: z.string().min(1).optional(),
     description: z.string().optional(),
-    imageUrl: z.string().url().optional().or(z.literal("")),
+    imageUrl: urlOrEmpty,
     linkUrl: z.string().url().optional().or(z.literal("")),
     zone: z.string().min(1).optional(),
     position: z.number().int().optional(),
@@ -120,9 +133,10 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     watch,
     setValue,
+    trigger,
   } = useForm<UpdateAdvertisementFormData>({
     resolver: zodResolver(updateAdvertisementSchema),
     defaultValues: {
@@ -138,7 +152,21 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
       endDate: isoToDatetimeLocal(advertisement.endDate.toISOString()),
       newsId: advertisement.newsId || "",
     },
+    mode: "onChange",
   });
+
+  const handleImageSelect = useCallback((url: string) => {
+    // Normalize the URL to ensure it starts with / if it's a relative path
+    const normalizedUrl = url && !url.startsWith("http") && !url.startsWith("/") ? `/${url}` : url;
+    setValue("imageUrl", normalizedUrl || "", { shouldValidate: true, shouldDirty: true });
+    // Trigger validation to clear any previous errors
+    trigger("imageUrl");
+  }, [setValue, trigger]);
+
+  const handleImageRemove = useCallback(() => {
+    setValue("imageUrl", "", { shouldValidate: true, shouldDirty: true });
+    trigger("imageUrl");
+  }, [setValue, trigger]);
 
   const onSubmit = async (data: UpdateAdvertisementFormData) => {
     setLoading(true);
@@ -176,192 +204,317 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
     }
   };
 
+  const imageUrl = watch("imageUrl");
+  const isActive = watch("isActive");
+
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-6">
-      <Card className="border-2 shadow-xl">
-        <CardHeader className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
-          <CardTitle className="text-2xl font-bold">Edit Advertisement</CardTitle>
-          <CardDescription className="text-purple-100">
-            Update the advertisement information below
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-6 md:p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input id="title" {...register("title")} disabled={loading} />
-          </div>
+    <div className="min-h-screen bg-background py-6">
+      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="grid grid-cols-1 xl:grid-cols-10 gap-2 lg:gap-4">
+            {/* Main Content Area - 70% width on desktop */}
+            <div className="xl:col-span-7 space-y-4 lg:space-y-6">
+              {/* Basic Information Card */}
+              <Card className="shadow-sm border">
+                <CardHeader className="pb-0">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Settings className="h-5 w-5 text-primary" />
+                    Basic Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="title" className="text-base font-medium">Title</Label>
+                    <Input 
+                      id="title" 
+                      {...register("title")} 
+                      disabled={loading}
+                      className="h-12"
+                    />
+                    {errors.title && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <X className="h-3 w-3" />
+                        {errors.title.message}
+                      </p>
+                    )}
+                  </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              {...register("description")}
-              disabled={loading}
-              rows={3}
-            />
-          </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="description" className="text-base font-medium">Description</Label>
+                    <Textarea
+                      id="description"
+                      {...register("description")}
+                      disabled={loading}
+                      rows={4}
+                      className="resize-none"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
 
-          <div className="space-y-2">
-            <Label>Advertisement Image</Label>
-            <div className="space-y-2">
-              <MediaPicker
-                value={watch("imageUrl") || ""}
-                onSelect={(url) => setValue("imageUrl", url)}
-                type="image"
-                label="Select Advertisement Image"
-              />
-              {watch("imageUrl") && (
-                <div className="relative w-full h-48 bg-muted rounded-lg overflow-hidden border">
-                  <OptimizedImage
-                    src={watch("imageUrl")}
-                    alt="Ad preview"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+              {/* Media Section */}
+              <Card className="shadow-sm border">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <ImageIcon className="h-5 w-5 text-primary" />
+                    Advertisement Image
+                  </CardTitle>
+                  <CardDescription>
+                    Select an image from your media library or upload a new one
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <MediaPicker
+                    value={imageUrl || ""}
+                    onSelect={handleImageSelect}
+                    type="image"
+                    label="Select Advertisement Image"
+                    description="Recommended size: 1200x630px"
                   />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2"
-                    onClick={() => setValue("imageUrl", "")}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              )}
+                  {imageUrl && (
+                    <div className="relative aspect-[3/2] w-full min-h-[200px] overflow-hidden rounded-lg border bg-background">
+                      <OptimizedImage
+                        src={imageUrl}
+                        alt="Ad preview"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="absolute top-2 right-2 h-8 w-8 z-10"
+                        onClick={handleImageRemove}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                  {errors.imageUrl && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <X className="h-3 w-3" />
+                      {errors.imageUrl.message}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Link & Settings Card */}
+              <Card className="shadow-sm border">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Link2 className="h-5 w-5 text-primary" />
+                    Link & Settings
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="linkUrl" className="text-base font-medium">Link URL</Label>
+                    <Input 
+                      id="linkUrl" 
+                      type="url" 
+                      {...register("linkUrl")} 
+                      disabled={loading}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      URL to redirect when ad is clicked (optional)
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <Label htmlFor="zone" className="text-base font-medium">Zone</Label>
+                      <Select
+                        onValueChange={(value) => setValue("zone", value, { shouldValidate: true })}
+                        defaultValue={advertisement.zone}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select zone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {AD_ZONES.map((zone) => (
+                            <SelectItem key={zone.value} value={zone.value}>
+                              {zone.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="position" className="text-base font-medium">Position</Label>
+                      <Input
+                        id="position"
+                        type="number"
+                        {...register("position", { valueAsNumber: true })}
+                        disabled={loading}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Order within the zone
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Schedule Card */}
+              <Card className="shadow-sm border">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Calendar className="h-5 w-5 text-primary" />
+                    Schedule
+                  </CardTitle>
+                  <CardDescription>
+                    Set when your advertisement should be displayed
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <Label htmlFor="startDate" className="text-base font-medium">
+                        Start Date
+                      </Label>
+                      <Input
+                        id="startDate"
+                        type="datetime-local"
+                        {...register("startDate")}
+                        disabled={loading}
+                        className="h-11"
+                      />
+                      {errors.startDate && (
+                        <p className="text-sm text-destructive flex items-center gap-1">
+                          <X className="h-3 w-3" />
+                          {errors.startDate.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="endDate" className="text-base font-medium">
+                        End Date
+                      </Label>
+                      <Input
+                        id="endDate"
+                        type="datetime-local"
+                        {...register("endDate")}
+                        disabled={loading}
+                        className="h-11"
+                      />
+                      {errors.endDate && (
+                        <p className="text-sm text-destructive flex items-center gap-1">
+                          <X className="h-3 w-3" />
+                          {errors.endDate.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="linkUrl">Link URL</Label>
-            <Input id="linkUrl" type="url" {...register("linkUrl")} disabled={loading} />
-          </div>
+            {/* Sidebar Area - 30% width on desktop */}
+            <div className="xl:col-span-3 space-y-6 lg:space-y-8">
+              <div className="xl:sticky xl:top-6 space-y-6">
+                {/* Actions Card */}
+                <Card className="shadow-sm border">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <Settings className="h-5 w-5 text-primary" />
+                      Actions
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Button 
+                      type="submit" 
+                      disabled={loading}
+                      className="w-full h-11 text-base font-semibold"
+                      size="lg"
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Updating...
+                        </>
+                      ) : (
+                        <>
+                          <ImageIcon className="mr-2 h-4 w-4" />
+                          Update Advertisement
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => router.back()}
+                      disabled={loading}
+                      className="w-full"
+                    >
+                      Cancel
+                    </Button>
+                  </CardContent>
+                </Card>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="zone">Zone</Label>
-              <Select
-                onValueChange={(value) => setValue("zone", value)}
-                defaultValue={advertisement.zone}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select zone" />
-                </SelectTrigger>
-                <SelectContent>
-                  {AD_ZONES.map((zone) => (
-                    <SelectItem key={zone.value} value={zone.value}>
-                      {zone.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                {/* Status Card */}
+                <Card className="shadow-sm border">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-lg">Status</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="isActive" className="text-base font-medium cursor-pointer">
+                          Active Status
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          {isActive ? "Advertisement is active" : "Advertisement is inactive"}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isActive ? <Eye className="h-4 w-4 text-green-600" /> : <EyeOff className="h-4 w-4 text-muted-foreground" />}
+                        <Switch
+                          id="isActive"
+                          checked={isActive}
+                          onCheckedChange={(checked) => setValue("isActive", checked as boolean, { shouldValidate: true })}
+                          disabled={loading}
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Additional Settings Card */}
+                <Card className="shadow-sm border">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-lg">Additional Settings</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <Label htmlFor="newsId" className="text-base font-medium">Link to News Post</Label>
+                      <Select
+                        onValueChange={(value) => setValue("newsId", value === "" ? undefined : value)}
+                        defaultValue={advertisement.newsId || ""}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a news post" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">None</SelectItem>
+                          {newsPosts.map((news) => (
+                            <SelectItem key={news.id} value={news.id}>
+                              {news.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="position">Position</Label>
-              <Input
-                id="position"
-                type="number"
-                {...register("position", { valueAsNumber: true })}
-                disabled={loading}
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate" className="text-sm font-semibold">
-                Start Date <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="startDate"
-                type="datetime-local"
-                {...register("startDate")}
-                disabled={loading}
-                className="h-11"
-              />
-              {errors.startDate && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span>⚠</span> {errors.startDate.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="endDate" className="text-sm font-semibold">
-                End Date <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="endDate"
-                type="datetime-local"
-                {...register("endDate")}
-                disabled={loading}
-                className="h-11"
-              />
-              {errors.endDate && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span>⚠</span> {errors.endDate.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="newsId">Link to News Post</Label>
-            <Select
-              onValueChange={(value) => setValue("newsId", value || undefined)}
-              defaultValue={advertisement.newsId || ""}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a news post" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">None</SelectItem>
-                {newsPosts.map((news) => (
-                  <SelectItem key={news.id} value={news.id}>
-                    {news.title}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="isActive"
-              checked={watch("isActive")}
-              onCheckedChange={(checked) => setValue("isActive", checked as boolean)}
-              disabled={loading}
-            />
-            <Label htmlFor="isActive" className="text-sm font-normal cursor-pointer">
-              Active
-            </Label>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t">
-            <Button 
-              type="submit" 
-              disabled={loading}
-              className="flex-1 sm:flex-none bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold h-11"
-            >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Update Advertisement
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.back()}
-              disabled={loading}
-              className="flex-1 sm:flex-none h-11"
-            >
-              Cancel
-            </Button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
     </div>
   );
 }

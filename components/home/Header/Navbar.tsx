@@ -26,6 +26,8 @@ import { useScroll } from "@/hooks/use-scroll"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { PublicMenu } from "@/types/public"
 import { SearchBar } from "@/components/news/search-bar"
+import { ModeToggle } from "@/components/layout/ThemeToggle/theme-toggle"
+import { useRouter } from "next/navigation"
 
 interface NavbarProps {
   menus?: PublicMenu[]; // Optional: can be passed from server-side
@@ -37,7 +39,7 @@ export function Navbar({ menus: initialMenus }: NavbarProps = {}) {
   const { scrolled, visible } = useScroll(20)
   const [publicMenus, setPublicMenus] = React.useState<PublicMenu[]>(initialMenus || []);
   const [isLoadingMenus, setIsLoadingMenus] = React.useState(!initialMenus || initialMenus.length === 0);
-
+const router = useRouter();
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -83,7 +85,7 @@ export function Navbar({ menus: initialMenus }: NavbarProps = {}) {
           } catch (err) {
             console.error("Failed to parse cached menus", err);
           }
-        }
+        } 
       } catch (e) {
         // localStorage not available, continue to fetch
       }
@@ -228,8 +230,11 @@ export function Navbar({ menus: initialMenus }: NavbarProps = {}) {
                         <Instagram className="h-5 w-5" />
                       </a>
                     </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20">
-                      SUBSCRIBE NOW
+                    <ModeToggle />
+                    <Button
+                    onClick={() => router.push("/auth/sign-in")}
+                    className="w-full bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20">
+                      SIGN IN
                     </Button>
                   </div>
                 </SheetContent>

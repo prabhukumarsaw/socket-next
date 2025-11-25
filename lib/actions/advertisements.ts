@@ -12,10 +12,20 @@ import { z } from "zod";
  * Handles CRUD operations for advertisements
  */
 
+// Custom URL validation that accepts absolute URLs, relative URLs (starting with /), or empty strings
+const urlOrEmpty = z.preprocess(
+  (val) => (val === "" || val === null || val === undefined ? "" : val),
+  z.union([
+    z.literal(""), // Empty string first
+    z.string().regex(/^\/.*/, "Relative URL must start with /"), // Relative URLs
+    z.string().url("Please enter a valid URL"), // Absolute URLs
+  ])
+);
+
 const createAdvertisementSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
-  imageUrl: z.string().url("Invalid image URL"),
+  imageUrl: urlOrEmpty,
   linkUrl: z.string().url().optional().or(z.literal("")),
   zone: z.string().min(1, "Zone is required"), // header, sidebar, footer, inline
   position: z.number().int().default(0),
@@ -28,7 +38,7 @@ const updateAdvertisementSchema = z.object({
   id: z.string(),
   title: z.string().min(1).optional(),
   description: z.string().optional(),
-  imageUrl: z.string().url().optional().or(z.literal("")),
+  imageUrl: urlOrEmpty.optional(),
   linkUrl: z.string().url().optional().or(z.literal("")),
   zone: z.string().min(1).optional(),
   position: z.number().int().optional(),

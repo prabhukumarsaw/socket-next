@@ -110,50 +110,62 @@ export default async function Page({ params, searchParams }: PageProps) {
     : []
 
   return (
-    <div className="relative">
-      {/* Article Header includes the Hero Image. We place it full width at the top. */}
-      <ArticleHeader article={article} />
+    <div className="relative w-full bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4 sm:py-6 lg:py-8">
+        {/* Article Header includes the Hero Image. We place it full width at the top. */}
+        <ArticleHeader article={article} />
 
-      {/* 
-        SECTION 1: Content + Sticky Sidebar 
-        This wrapper contains ONLY the text content and the social sidebar.
-        This ensures the "sticky" track ends exactly when the content ends.
-      */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 relative">
-        {/* Sticky Social Sidebar (Left) - Only visible alongside content */}
-        <div className="hidden lg:block shrink-0 w-12">
-          <div className="sticky top-24">
-            <SocialSidebar />
+        {/* 
+          SECTION 1: Content + Sticky Sidebar 
+          This wrapper contains ONLY the text content and the social sidebar.
+          This ensures the "sticky" track ends exactly when the content ends.
+        */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-12 relative">
+          {/* Sticky Social Sidebar (Left) - Only visible alongside content */}
+          <div className="hidden lg:block shrink-0 w-12">
+            <div className="sticky top-24">
+              <SocialSidebar />
+            </div>
+          </div>
+
+          {/* Article Body (Center) */}
+          <div className="flex-1 min-w-0 max-w-4xl mx-auto lg:mx-0">
+            <ArticleContent content={article.fullContent || article.content} />
+            
+            {/* Inline Ad after content */}
+            <div className="my-12">
+              <AdInline showDefault={true} />
+            </div>
+          </div>
+
+          {/* Right Sidebar - Optional for ads or related content */}
+          <div className="hidden xl:block shrink-0 w-64">
+            <div className="sticky top-24 space-y-6">
+              {/* Placeholder for right sidebar content */}
+            </div>
           </div>
         </div>
 
-        {/* Article Body (Right) */}
-        <div className="flex-1 min-w-0">
-          <ArticleContent content={article.fullContent || article.content} />
-          
-          {/* Inline Ad after content */}
-          <div className="my-12">
-            <AdInline showDefault={true} />
+        {/* 
+          SECTION 2: Footer Components (Bio, Related, Comments)
+          We start a new flex container here. We replicate the left "spacer" 
+          so that these components align perfectly with the text above, 
+          but without the social sidebar sticking next to them.
+        */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-12 relative mt-12 pt-12 border-t border-border">
+          {/* Spacer to maintain alignment with the content above */}
+          <div className="hidden lg:block shrink-0 w-12" aria-hidden="true" />
+
+          <div className="flex-1 min-w-0 max-w-4xl mx-auto lg:mx-0">
+            <AuthorBio author={article.author} />
+
+            <RelatedPosts posts={relatedPosts} />
+
+            <CommentsSection newsId={result.news.id} count={(result.news as any).commentCount || article.comments || 0} />
           </div>
-        </div>
-      </div>
 
-      {/* 
-        SECTION 2: Footer Components (Bio, Related, Comments)
-        We start a new flex container here. We replicate the left "spacer" 
-        so that these components align perfectly with the text above, 
-        but without the social sidebar sticking next to them.
-      */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 relative mt-10 pt-10 border-t border-border">
-        {/* Spacer to maintain alignment with the content above */}
-        <div className="hidden lg:block shrink-0 w-12" aria-hidden="true" />
-
-        <div className="flex-1 min-w-0">
-          <AuthorBio author={article.author} />
-
-          <RelatedPosts posts={relatedPosts} />
-
-          <CommentsSection newsId={result.news.id} count={(result.news as any).commentCount || article.comments || 0} />
+          {/* Right Sidebar Spacer */}
+          <div className="hidden xl:block shrink-0 w-64" aria-hidden="true" />
         </div>
       </div>
     </div>
