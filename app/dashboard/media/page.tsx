@@ -41,7 +41,7 @@ export default async function MediaPage({
   return (
     <PageContainer>
       <Suspense fallback={<MediaLibrarySkeleton />}>
-        <MediaLibrary
+        <MediaLibrary 
           media={result.success ? result.media : []}
           total={result.success ? result.total : 0}
           page={result.success ? result.page : 1}

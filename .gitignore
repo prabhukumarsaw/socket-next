@@ -37,4 +37,6 @@ next-env.d.ts
 # prisma
 /prisma/migrations
 
-
+# prisma
+images*
+public/storage
