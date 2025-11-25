@@ -4,31 +4,30 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { hasPermission } from "@/lib/auth/permissions";
 import { createAuditLog } from "@/lib/audit-log";
-import { uploadToCloudinary, deleteFromCloudinary } from "@/lib/cloudinary";
+import { uploadToLocalStorage, deleteFromLocalStorage } from "@/lib/storage/local-storage";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 /**
  * Media Management Server Actions
- * Handles media upload, management, and deletion with Cloudinary
+ * Handles media upload, management, and deletion with Local Storage
  */
 
 const uploadMediaSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  url: z.string().url("Invalid URL"),
-  publicId: z.string().min(1, "Public ID is required"),
+  url: z.string().min(1, "URL is required"),
   format: z.string().min(1, "Format is required"),
   resourceType: z.enum(["image", "video", "raw"]),
   bytes: z.number().optional(),
   width: z.number().optional(),
   height: z.number().optional(),
-  duration: z.number().optional(),
+  blurDataUrl: z.string().optional(),
   folder: z.string().optional(),
   tags: z.array(z.string()).optional(),
 });
 
 /**
- * Upload media file to Cloudinary and save to database
+ * Upload media file to local storage and save to database
  */
 export async function uploadMedia(file: File, folder?: string, tags?: string[]) {
   try {
@@ -46,9 +45,9 @@ export async function uploadMedia(file: File, folder?: string, tags?: string[]) 
       };
     }
 
-    // Check file size and validate
+    // Check file size (2MB limit)
     const fileSizeMB = file.size / (1024 * 1024);
-    const maxSizeMB = 10; // 10MB max before upload
+    const maxSizeMB = 2;
     
     if (fileSizeMB > maxSizeMB) {
       return {
@@ -57,34 +56,29 @@ export async function uploadMedia(file: File, folder?: string, tags?: string[]) 
       };
     }
 
-    // Show info if file is large (will be optimized)
-    if (fileSizeMB > 1) {
-      // File will be automatically optimized by Cloudinary
-      console.info(`Large file detected: ${fileSizeMB.toFixed(2)}MB. Will be optimized during upload.`);
-    }
-
-    // Upload to Cloudinary with optimization
-    const uploadResult = await uploadToCloudinary(file, {
-      folder: folder || "bawal-news/media",
+    // Upload to local storage with compression
+    const uploadResult = await uploadToLocalStorage(file, file.name, {
+      folder: folder || "uploads",
       tags: tags || [],
-      optimize: true,
-      compression: "auto",
-      maxFileSize: 10 * 1024 * 1024, // 10MB max
+      quality: 80,
+      generateBlur: true,
     });
 
-    // Save to database
+    // Determine resource type
+    const resourceType = uploadResult.mimeType.startsWith("image/") ? "image" : "raw";
+
+    // Save to database with relative URL
     const media = await prisma.media.create({
       data: {
-        name: file.name,
-        url: uploadResult.secureUrl,
-        publicId: uploadResult.publicId,
+        name: uploadResult.originalName,
+        url: uploadResult.url, // Relative URL
+        publicId: uploadResult.filename, // Use filename as identifier
         format: uploadResult.format,
-        resourceType: uploadResult.resourceType as "image" | "video" | "raw",
+        resourceType,
         bytes: uploadResult.bytes,
         width: uploadResult.width,
         height: uploadResult.height,
-        duration: uploadResult.duration,
-        folder: folder || "bawal-news/media",
+        folder: folder || "uploads",
         tags: tags || [],
         uploadedBy: currentUser.userId,
       },
@@ -99,15 +93,21 @@ export async function uploadMedia(file: File, folder?: string, tags?: string[]) 
 
     revalidatePath("/dashboard/media");
 
-    return { success: true, media };
-  } catch (error) {
+    return { 
+      success: true, 
+      media: {
+        ...media,
+        blurDataUrl: uploadResult.blurDataUrl,
+      }
+    };
+  } catch (error: any) {
     console.error("Upload media error:", error);
-    return { success: false, error: "Failed to upload media" };
+    return { success: false, error: error.message || "Failed to upload media" };
   }
 }
 
 /**
- * Save media record (for external uploads)
+ * Save media record (for external uploads via API)
  */
 export async function saveMedia(data: z.infer<typeof uploadMediaSchema>) {
   try {
@@ -128,7 +128,16 @@ export async function saveMedia(data: z.infer<typeof uploadMediaSchema>) {
 
     const media = await prisma.media.create({
       data: {
-        ...validated,
+        name: validated.name,
+        url: validated.url,
+        publicId: validated.url.split("/").pop() || validated.name, // Extract filename
+        format: validated.format,
+        resourceType: validated.resourceType,
+        bytes: validated.bytes,
+        width: validated.width,
+        height: validated.height,
+        folder: validated.folder,
+        tags: validated.tags || [],
         uploadedBy: currentUser.userId,
       },
     });
@@ -181,12 +190,12 @@ export async function deleteMedia(mediaId: string) {
       };
     }
 
-    // Delete from Cloudinary
+    // Delete from local storage
     try {
-      await deleteFromCloudinary(media.publicId);
+      await deleteFromLocalStorage(media.url);
     } catch (error) {
-      console.error("Failed to delete from Cloudinary:", error);
-      // Continue with database deletion even if Cloudinary deletion fails
+      console.error("Failed to delete from local storage:", error);
+      // Continue with database deletion even if local deletion fails
     }
 
     // Delete from database
@@ -339,4 +348,3 @@ export async function getMediaById(mediaId: string) {
     return { success: false, error: "Failed to fetch media" };
   }
 }
-

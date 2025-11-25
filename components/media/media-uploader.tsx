@@ -8,13 +8,14 @@ import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Upload, CheckCircle2, XCircle } from "lucide-react"
+import { Upload, CheckCircle2, XCircle, Shield, ImageIcon } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
 
 /**
  * Media Uploader Component
- * Handles file uploads to Cloudinary with enhanced UI
+ * Handles file uploads to local storage with compression
  */
 export function MediaUploader() {
   const router = useRouter()
@@ -22,7 +23,7 @@ export function MediaUploader() {
   const [files, setFiles] = useState<File[]>([])
   const [uploading, setUploading] = useState(false)
   const [progress, setProgress] = useState(0)
-  const [folder, setFolder] = useState("bawal-news/media")
+  const [folder, setFolder] = useState("uploads")
   const [tags, setTags] = useState("")
   const [uploadResults, setUploadResults] = useState<{ success: number; failed: number } | null>(null)
 
@@ -30,7 +31,7 @@ export function MediaUploader() {
     if (filesToUpload.length === 0) return
 
     setUploading(true)
-    setProgress(10) // Start progress
+    setProgress(10)
     setUploadResults(null)
 
     const tagsArray = tags
@@ -39,32 +40,44 @@ export function MediaUploader() {
       .filter(Boolean)
 
     try {
-      // Validate file sizes
-      const maxSize = 10 * 1024 * 1024 // 10MB
+      // Validate file sizes (2MB limit)
+      const maxSize = 2 * 1024 * 1024
       const invalidFiles = filesToUpload.filter((file) => file.size > maxSize)
 
       if (invalidFiles.length > 0) {
-        const fileNames = invalidFiles.map((f) => f.name).join(", ")
+        const fileNames = invalidFiles.map((f) => `${f.name} (${(f.size / 1024 / 1024).toFixed(2)}MB)`).join(", ")
         toast({
           title: "Files too large",
-          description: `Some files exceed the 10MB limit: ${fileNames}`,
+          description: `Maximum size is 2MB. Files exceeding limit: ${fileNames}`,
           variant: "destructive",
         })
         setUploading(false)
         return
       }
 
-      // Calculate total progress steps
+      // Validate file types
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"]
+      const invalidTypeFiles = filesToUpload.filter((file) => !allowedTypes.includes(file.type))
+
+      if (invalidTypeFiles.length > 0) {
+        toast({
+          title: "Invalid file types",
+          description: "Only JPG, PNG, WebP, GIF, and SVG files are allowed.",
+          variant: "destructive",
+        })
+        setUploading(false)
+        return
+      }
+
       const totalFiles = filesToUpload.length
       let completedFiles = 0
 
-      // Process uploads sequentially to update progress more accurately
       const results = []
       for (const file of filesToUpload) {
         const result = await uploadMedia(file, folder || undefined, tagsArray.length > 0 ? tagsArray : undefined)
         results.push(result)
         completedFiles++
-        setProgress(10 + (completedFiles / totalFiles) * 80) // Scale from 10% to 90%
+        setProgress(10 + (completedFiles / totalFiles) * 80)
       }
 
       setProgress(100)
@@ -77,17 +90,17 @@ export function MediaUploader() {
       if (successCount > 0) {
         toast({
           title: "Upload complete",
-          description: `Successfully uploaded ${successCount} files.`,
+          description: `Successfully uploaded ${successCount} file${successCount > 1 ? "s" : ""}.`,
         })
         setFiles([])
-        // Don't reset tags/folder in case they want to upload more with same settings
         router.refresh()
       }
 
       if (failCount > 0) {
+        const errors = results.filter((r) => !r.success).map((r) => r.error).join(", ")
         toast({
           title: "Some uploads failed",
-          description: `${failCount} files failed to upload.`,
+          description: errors || `${failCount} file${failCount > 1 ? "s" : ""} failed to upload.`,
           variant: "destructive",
         })
       }
@@ -99,7 +112,6 @@ export function MediaUploader() {
       })
     } finally {
       setUploading(false)
-      // Reset progress after a delay
       setTimeout(() => setProgress(0), 2000)
     }
   }
@@ -112,22 +124,34 @@ export function MediaUploader() {
           Upload Media
         </CardTitle>
         <CardDescription>
-          Drag and drop files here or click to browse. Supports images, videos, and documents.
+          Drag and drop files here or click to browse. Images are automatically compressed.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* File requirements info */}
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary" className="text-xs">
+            <ImageIcon className="h-3 w-3 mr-1" />
+            JPG, PNG, WebP, GIF, SVG
+          </Badge>
+          <Badge variant="secondary" className="text-xs">
+            <Shield className="h-3 w-3 mr-1" />
+            Max 2MB per file
+          </Badge>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="folder">Destination Folder</Label>
             <Input
               id="folder"
-              placeholder="e.g., content/blog/2024"
+              placeholder="e.g., blog/2024"
               value={folder}
               onChange={(e) => setFolder(e.target.value)}
               disabled={uploading}
             />
             <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-              Optional • Defaults to "bawal-news/media"
+              Optional • Defaults to "uploads"
             </p>
           </div>
 
@@ -135,7 +159,7 @@ export function MediaUploader() {
             <Label htmlFor="tags">Tags</Label>
             <Input
               id="tags"
-              placeholder="e.g., nature, featured, dark-mode"
+              placeholder="e.g., nature, featured"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               disabled={uploading}
@@ -150,11 +174,13 @@ export function MediaUploader() {
             onValueChange={setFiles}
             onUpload={handleUpload}
             accept={{
-              "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
-              "video/*": [".mp4", ".webm", ".mov"],
-              "application/pdf": [".pdf"],
+              "image/jpeg": [".jpg", ".jpeg"],
+              "image/png": [".png"],
+              "image/webp": [".webp"],
+              "image/gif": [".gif"],
+              "image/svg+xml": [".svg"],
             }}
-            maxSize={10 * 1024 * 1024}
+            maxSize={2 * 1024 * 1024}
             multiple
             disabled={uploading}
           />
@@ -163,7 +189,7 @@ export function MediaUploader() {
             <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4 z-10 rounded-lg border">
               <div className="w-1/2 space-y-2">
                 <div className="flex justify-between text-sm font-medium">
-                  <span>Uploading...</span>
+                  <span>Uploading & compressing...</span>
                   <span>{Math.round(progress)}%</span>
                 </div>
                 <Progress value={progress} className="h-2" />
@@ -180,8 +206,8 @@ export function MediaUploader() {
             {uploadResults.failed > 0 ? <XCircle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
             <AlertTitle>Upload Finished</AlertTitle>
             <AlertDescription>
-              {uploadResults.success} files uploaded successfully.{" "}
-              {uploadResults.failed > 0 && `${uploadResults.failed} files failed.`}
+              {uploadResults.success} file{uploadResults.success !== 1 ? "s" : ""} uploaded successfully.{" "}
+              {uploadResults.failed > 0 && `${uploadResults.failed} file${uploadResults.failed !== 1 ? "s" : ""} failed.`}
             </AlertDescription>
           </Alert>
         )}

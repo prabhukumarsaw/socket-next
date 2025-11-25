@@ -27,7 +27,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
 import { MediaPicker } from "@/components/media/media-picker";
-import NextImage from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
@@ -427,7 +427,7 @@ export function EditNewsForm({ news }: EditNewsFormProps) {
                       />
                       {coverImage && (
                         <div className="relative mb-2 aspect-[3/2] w-full overflow-hidden rounded-sm">
-                          <NextImage
+                          <OptimizedImage
                             src={coverImage}
                             alt="Cover preview"
                             fill
@@ -469,7 +469,7 @@ export function EditNewsForm({ news }: EditNewsFormProps) {
                       />
                       {ogImage && (
                         <div className="relative mb-2 aspect-[3/2] w-full overflow-hidden rounded-sm">
-                          <NextImage
+                          <OptimizedImage
                             src={ogImage}
                             alt="OG preview"
                             fill

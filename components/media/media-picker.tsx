@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -17,11 +16,12 @@ import { FileUploader } from "@/components/misc/file-uploader";
 import { uploadMedia } from "@/lib/actions/media";
 import { getUserMedia } from "@/lib/actions/media";
 import { useToast } from "@/hooks/use-toast";
-import { Search, Upload, Image as ImageIcon, Check, X } from "lucide-react";
-import NextImage from "next/image";
+import { Search, Image as ImageIcon, Check, X, Shield } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { formatBytes } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
 interface Media {
   id: string;
@@ -37,12 +37,15 @@ interface Media {
 }
 
 interface MediaPickerProps {
-  value?: string; // Selected media URL
+  value?: string;
   onSelect: (url: string, mediaId?: string) => void;
   type?: "image" | "video" | "all";
   label?: string;
   description?: string;
 }
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
 
 export function MediaPicker({ 
   value, 
@@ -83,31 +86,33 @@ export function MediaPicker({
 
     setUploading(true);
     try {
-      // Validate file sizes
-      const maxSize = 10 * 1024 * 1024; // 10MB
-      const invalidFiles = filesToUpload.filter((file) => file.size > maxSize);
-      
-      if (invalidFiles.length > 0) {
+      // Validate file sizes (2MB limit for local storage)
+      const invalidSizeFiles = filesToUpload.filter((file) => file.size > MAX_FILE_SIZE);
+      if (invalidSizeFiles.length > 0) {
+        const names = invalidSizeFiles.map(f => `${f.name} (${(f.size / 1024 / 1024).toFixed(2)}MB)`).join(", ");
         toast({
-          title: "File too large",
-          description: `Some files exceed 10MB limit. Please compress them before uploading.`,
+          title: "Files too large",
+          description: `Maximum size is 2MB. Files exceeding limit: ${names}`,
           variant: "destructive",
         });
         setUploading(false);
         return;
       }
 
-      // Show info for large files
-      const largeFiles = filesToUpload.filter((file) => file.size > 1024 * 1024);
-      if (largeFiles.length > 0) {
+      // Validate file types
+      const invalidTypeFiles = filesToUpload.filter((file) => !ALLOWED_IMAGE_TYPES.includes(file.type));
+      if (invalidTypeFiles.length > 0) {
         toast({
-          title: "Optimizing",
-          description: "Large files detected. They will be automatically optimized during upload.",
+          title: "Invalid file types",
+          description: "Only JPG, PNG, WebP, GIF, and SVG files are allowed.",
+          variant: "destructive",
         });
+        setUploading(false);
+        return;
       }
 
       const uploadPromises = filesToUpload.map((file) =>
-        uploadMedia(file, "bawal-news/media", ["uploaded"])
+        uploadMedia(file, "uploads", ["media-picker"])
       );
 
       const results = await Promise.all(uploadPromises);
@@ -117,7 +122,7 @@ export function MediaPicker({
       if (successCount > 0) {
         toast({
           title: "Upload successful",
-          description: `${successCount} file(s) uploaded successfully${failCount > 0 ? `, ${failCount} failed` : ""}`,
+          description: `${successCount} file(s) uploaded${failCount > 0 ? `, ${failCount} failed` : ""}`,
         });
         setFiles([]);
         loadMedia();
@@ -210,7 +215,7 @@ export function MediaPicker({
                       >
                         {item.resourceType === "image" ? (
                           <div className="aspect-square relative bg-muted">
-                            <NextImage
+                            <OptimizedImage
                               src={item.url}
                               alt={item.name}
                               fill
@@ -253,30 +258,41 @@ export function MediaPicker({
           </TabsContent>
 
           <TabsContent value="upload" className="flex-1 overflow-auto">
-            <FileUploader
-              value={files}
-              onValueChange={setFiles}
-              onUpload={handleUpload}
-              accept={
-                type === "image"
-                  ? { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] }
-                  : type === "video"
-                  ? { "video/*": [".mp4", ".webm", ".mov"] }
-                  : {
-                      "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
-                      "video/*": [".mp4", ".webm", ".mov"],
-                    }
-              }
-              maxSize={5 * 1024 * 1024} // 5MB
-              multiple
-              disabled={uploading}
-            />
-            {uploading && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Uploading files...
+            <div className="space-y-4">
+              {/* File requirements */}
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className="text-xs">
+                  <ImageIcon className="h-3 w-3 mr-1" />
+                  JPG, PNG, WebP, GIF, SVG
+                </Badge>
+                <Badge variant="secondary" className="text-xs">
+                  <Shield className="h-3 w-3 mr-1" />
+                  Max 2MB per file
+                </Badge>
               </div>
-            )}
+
+              <FileUploader
+                value={files}
+                onValueChange={setFiles}
+                onUpload={handleUpload}
+                accept={{
+                  "image/jpeg": [".jpg", ".jpeg"],
+                  "image/png": [".png"],
+                  "image/webp": [".webp"],
+                  "image/gif": [".gif"],
+                  "image/svg+xml": [".svg"],
+                }}
+                maxSize={MAX_FILE_SIZE}
+                multiple
+                disabled={uploading}
+              />
+              {uploading && (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-4">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Uploading & compressing...
+                </div>
+              )}
+            </div>
           </TabsContent>
         </Tabs>
 
@@ -306,4 +322,3 @@ export function MediaPicker({
     </Dialog>
   );
 }
-

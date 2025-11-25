@@ -281,19 +281,19 @@ model NewsCategory {
   @@map("news_categories")
 }
 
-// Media model - Cloudinary media files
+// Media model - Local storage media files
 model Media {
   id          String   @id @default(cuid())
   name        String
-  url         String   // Cloudinary URL
-  publicId    String   // Cloudinary public ID
-  format      String   // jpg, png, mp4, etc.
+  url         String   // Relative URL (e.g., /storage/media/filename.jpg)
+  publicId    String   // Unique filename identifier
+  format      String   // jpg, png, webp, gif, svg
   resourceType String  // image, video, raw
   bytes       Int?     // File size in bytes
-  width       Int?     // Image/video width
-  height      Int?     // Image/video height
-  duration    Int?     // Video duration in seconds
-  folder      String?  // Cloudinary folder path
+  width       Int?     // Image width
+  height      Int?     // Image height
+  duration    Int?     // Video duration in seconds (if applicable)
+  folder      String?  // Storage folder path
   tags        String[] // Tags for organization
   uploadedBy  String   // User who uploaded
   createdAt   DateTime @default(now())

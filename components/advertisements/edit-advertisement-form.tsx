@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MediaPicker } from "@/components/media/media-picker";
-import NextImage from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { X } from "lucide-react";
 import { datetimeLocalToISO, isoToDatetimeLocal, validateDateRange } from "@/lib/utils/datetime-utils";
 
@@ -213,7 +213,7 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
               />
               {watch("imageUrl") && (
                 <div className="relative w-full h-48 bg-muted rounded-lg overflow-hidden border">
-                  <NextImage
+                  <OptimizedImage
                     src={watch("imageUrl")}
                     alt="Ad preview"
                     fill

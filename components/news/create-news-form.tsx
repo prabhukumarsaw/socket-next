@@ -27,7 +27,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { X, Plus, Eye, EyeOff } from "lucide-react";
 import { MediaPicker } from "@/components/media/media-picker";
-import NextImage from "next/image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
@@ -381,12 +381,11 @@ export function CreateNewsForm() {
                       />
                       {coverImage && (
                         <div className="relative mb-2 aspect-[3/2] w-full overflow-hidden rounded-sm">
-                          <NextImage
+                          <OptimizedImage
                             src={coverImage}
                             alt="Cover preview"
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    
                             sizes="(max-width: 768px) 100vw, 50vw"
                           />
                           <Button
@@ -426,11 +425,11 @@ export function CreateNewsForm() {
                       />
                       {ogImage && (
                         <div className="relative mb-2 aspect-[3/2] w-full overflow-hidden rounded-sm">
-                          <NextImage
+                          <OptimizedImage
                             src={ogImage}
                             alt="OG preview"
                             fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                             sizes="(max-width: 768px) 100vw, 50vw"
                           />
                           <Button
