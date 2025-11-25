@@ -1,0 +1,147 @@
+/* -----------------------------------------------------------
+   FEATURED SECTION TYPOGRAPHY (ADVANCED + RESPONSIVE)
+   -----------------------------------------------------------
+   Desktop-first, smooth scale on all breakpoints
+   Follows ShadCN design guidelines + custom brand typography
+------------------------------------------------------------*/
+
+/* Wrapper Class */
+.feature-section-font {
+  font-family: var(--font-sans, ui-sans-serif);
+  color: hsl(var(--foreground));
+  line-height: 1.25;
+  font-weight: 700;
+  transition: color 300ms ease;
+}
+
+/* -------------------------------
+   H1 → 36px (Desktop Base)
+------------------------------- */
+.feature-section-font h1 {
+  font-size: 36px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+/* -------------------------------
+   H2 → 30px (Desktop Base)
+------------------------------- */
+.feature-section-font h2 {
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+
+.content-title {
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+
+/* -------------------------------
+   H3 → 18px (Desktop Base)
+------------------------------- */
+.feature-section-font h3 {
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.headlines-title {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+  margin-bottom: 0rem;
+ 
+}
+
+.headlines-sub-title {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+  margin-bottom: 0rem;
+ 
+}
+
+/* -------------------------------
+   H4 / Expert Text → 13px
+------------------------------- */
+.feature-section-font h4,
+.feature-section-font .expert {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Hover Interactivity */
+.headlines-title,
+.feature-section-font h1:hover,
+.feature-section-font h2:hover,
+.feature-section-font h3:hover {
+  color: hsla(var(--foreground), 0.85);
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE TYPOGRAPHY
+   Smooth scale for mobile to laptops
+------------------------------------------------------------*/
+
+/* Mobile (base) */
+@media (max-width: 639px) {
+  .feature-section-font h1 {
+    font-size: 28px;
+  }
+  .feature-section-font h2 {
+    font-size: 22px;
+  }
+  .feature-section-font h3 {
+    font-size: 16px;
+  }
+}
+
+/* Tablet (sm) */
+@media (min-width: 640px) and (max-width: 767px) {
+  .feature-section-font h1 {
+    font-size: 30px;
+  }
+  .feature-section-font h2 {
+    font-size: 24px;
+  }
+}
+
+/* Medium Screens (md) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .feature-section-font h1 {
+    font-size: 32px;
+  }
+  .feature-section-font h2 {
+    font-size: 26px;
+  }
+}
+
+/* Large Screens (lg+) */
+@media (min-width: 1024px) {
+  .feature-section-font h1 {
+    font-size: 36px;
+  }
+  .feature-section-font h2 {
+    font-size: 30px;
+  }
+}
+
+/* Extra Large (xl): Slight upscale */
+@media (min-width: 1280px) {
+  .feature-section-font h1 {
+    font-size: 40px;
+  }
+  .feature-section-font h2 {
+    font-size: 30px;
+  }
+}

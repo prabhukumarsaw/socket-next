@@ -1,0 +1,380 @@
+[
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.734Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.820Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>   15    </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.738Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>   15    </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.822Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">                                               15     .</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.738Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">                                               15     .</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.823Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.743Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.824Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div><span style=\\\"font-size: 14pt;\\\"><strong>   &nbsp;</strong></span></div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.744Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div><span style=\"font-size: 14pt;\"><strong>   &nbsp;</strong></span></div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.831Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.744Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.832Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.745Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.833Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>          &nbsp;</strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.745Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>          &nbsp;</strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.834Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>2.          HR      -   .&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.746Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>2.          HR      -   .&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.838Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.746Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.854Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>1.              .</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.747Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>1.              .</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.857Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>3.           -         .</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.747Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>3.           -         .</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.860Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.748Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.862Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.749Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.863Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.750Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.864Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>4.              .            </div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.751Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>4.              .            </div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.865Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>6.                             .</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.751Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>6.                             .</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.866Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.752Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.868Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<div>&nbsp;</div>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.753Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<div>&nbsp;</div>"
+    },
+    "timestamp": "2025-11-21T17:42:41.870Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p><span style=\\\"font-size: 14pt;\\\"><strong>      </strong></span></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.754Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p><span style=\"font-size: 14pt;\"><strong>      </strong></span></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.873Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p><strong><span style=\\\"font-size: 14pt;\\\">1214       </span></strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.755Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p><strong><span style=\"font-size: 14pt;\">1214       </span></strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.874Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.759Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.876Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>       </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.761Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>       </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.878Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>     </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.761Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>     </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.879Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.761Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.880Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.763Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.882Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.765Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.885Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>2019       </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.766Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>2019       </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.887Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.766Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.889Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.767Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.892Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">&nbsp;</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.768Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">&nbsp;</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.895Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1952&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.769Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1952&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.898Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.769Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.901Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1977&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;   </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.770Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1977&nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;   </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.903Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1957&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.771Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1957&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.905Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1980&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.771Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1980&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.907Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1985&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.772Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1985&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.909Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1995&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.772Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1995&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.911Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1990&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.773Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1990&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.913Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">1996&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.773Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">1996&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.915Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>      </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.770Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>      </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.917Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">2000&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.774Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">2000&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.919Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">2009&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.774Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">2009&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.921Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">2005&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.775Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">2005&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.923Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\">2014&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.775Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\">2014&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.926Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>294        </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.777Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>294        </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.927Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>       </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.778Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>       </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.928Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>   700   </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.781Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>   700   </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.930Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p class=\\\"MsoNormal\\\"><strong>          </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.784Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p class=\"MsoNormal\"><strong>          </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.933Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p class=\\\"MsoNormal\\\"><strong> 6    </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.786Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p class=\"MsoNormal\"><strong> 6    </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.935Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p class=\\\"MsoNormal\\\"><strong> &nbsp; &nbsp;  &nbsp; &nbsp; FIR&nbsp;   </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.786Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p class=\"MsoNormal\"><strong> &nbsp; &nbsp;  &nbsp; &nbsp; FIR&nbsp;   </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.938Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p dir=\\\"ltr\\\"><strong>     70   </strong></p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.787Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p dir=\"ltr\"><strong>     70   </strong></p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.941Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p class=\\\"MsoNormal\\\">2020-21&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3217&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 448&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 346.04</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.788Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p class=\"MsoNormal\">2020-21&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3217&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 448&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 346.04</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.943Z"
+  },
+  {
+    "error": "\nInvalid `prisma.tbl_news.create()` invocation in\nI:\\WORKSPACE-DEV\\Framework\\bawal-next\\scripts\\import-news.cjs:94:35\n\n  91   });\n  92 } else {\n  93   // Create new record\n→ 94   await prisma.tbl_news.create({\n         data: {\n           post_title: \"<p class=\\\"MsoNormal\\\">2019-20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2237&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 448&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172.75</p>\",\n           name: null,\n           post_summary: null,\n           post_content: null,\n           meta_description: null,\n           meta_keyword: null,\n           post_hits: 0,\n           like: 0,\n           post_image: null,\n           created_at: null,\n           updated_at: \"2025-11-21T17:42:41.788Z\",\n       +   post_name: String\n         }\n       })\n\nArgument `post_name` is missing.",
+    "record": {
+      "post_title": "<p class=\"MsoNormal\">2019-20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2237&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 448&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172.75</p>"
+    },
+    "timestamp": "2025-11-21T17:42:41.948Z"
+  }
+]

@@ -1,0 +1,416 @@
+// Prisma Schema for Enterprise Dashboard with RBAC
+// This schema defines User, Role, Permission, Menu, and AuditLog models
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - stores all user information
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  username      String    @unique
+  password      String? // Nullable for social login users
+  firstName     String?
+  lastName      String?
+  avatar        String?
+  isActive      Boolean   @default(true)
+  isEmailVerified Boolean @default(false)
+  provider      String    @default("credentials") // credentials, google, whatsapp
+  providerId    String? // OAuth provider ID
+  lastLogin     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  roles         UserRole[]
+  auditLogs     AuditLog[]
+  blogs         Blog[]
+  news          News[]    @relation("NewsAuthor")
+  editedNews    News[]    @relation("NewsEditor")
+  advertisements Advertisement[]
+  media        Media[]
+
+  @@index([email])
+  @@index([username])
+  @@index([isActive])
+  @@map("users")
+}
+
+// Role model - defines different roles in the system
+model Role {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique // superadmin, admin, manager, user, etc.
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  users       UserRole[]
+  permissions RolePermission[]
+  menus       RoleMenu[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@map("roles")
+}
+
+// Permission model - defines granular permissions
+model Permission {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique // e.g., user.create, user.read, user.update, user.delete
+  description String?
+  resource    String    // e.g., user, role, permission, menu
+  action      String    // e.g., create, read, update, delete, manage
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  roles       RolePermission[]
+
+  @@index([slug])
+  @@index([resource, action])
+  @@index([isActive])
+  @@map("permissions")
+}
+
+
+
+// Menu model - defines navigation menu items
+model Menu {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  path        String?   // Route path
+  icon        String?
+  parentId    String?   // For nested menus
+  order       Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  isPublic Boolean @default(false)
+
+  // Relations
+  parent      Menu?     @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children    Menu[]    @relation("MenuHierarchy")
+  roles       RoleMenu[]
+  news        NewsCategory[] // News posts in this category
+
+  @@index([slug])
+  @@index([parentId])
+  @@index([isActive])
+  @@index([isPublic]) 
+  @@map("menus")
+}
+
+// Junction table: User <-> Role (Many-to-Many)
+model UserRole {
+  id        String   @id @default(cuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+  @@map("user_roles")
+}
+
+// Junction table: Role <-> Permission (Many-to-Many)
+model RolePermission {
+  id           String   @id @default(cuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+
+  // Relations
+  role         Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+  @@map("role_permissions")
+}
+
+// Junction table: Role <-> Menu (Many-to-Many)
+model RoleMenu {
+  id        String   @id @default(cuid())
+  roleId    String
+  menuId    String
+  createdAt DateTime @default(now())
+
+  // Relations
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, menuId])
+  @@index([roleId])
+  @@index([menuId])
+  @@map("role_menus")
+}
+
+// AuditLog model - tracks all user actions for compliance and security
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String
+  action      String   // e.g., CREATE_USER, UPDATE_ROLE, DELETE_PERMISSION
+  resource    String   // e.g., User, Role, Permission
+  resourceId  String?  // ID of the affected resource
+  description String?  // Human-readable description
+  metadata    String?  // JSON string for additional data
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+
+
+// Blog model - user-specific blog posts
+model Blog {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   // Rich text content
+  excerpt     String?  // Short description
+  coverImage  String?  // Cover image URL
+  isPublished Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  views       Int      @default(0)
+  authorId    String   // User who created the blog
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  // Relations
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([slug])
+  @@index([isPublished])
+  @@index([isActive])
+  @@index([createdAt])
+  @@map("blogs")
+}
+
+// News/Post model - Hindi news platform posts
+model News {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  content         String   @db.Text // Rich text content from Lexical editor
+  excerpt         String?  @db.Text // Short description
+  coverImage      String?  // Cloudinary URL
+  isPublished     Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  isBreaking      Boolean  @default(false) // Breaking news flag
+  isFeatured      Boolean  @default(false) // Featured news flag
+  viewCount       Int      @default(0) // Total view count
+  likes           Int      @default(0)
+  authorId        String   // User who created the news
+  editorId        String?  // User who edited/approclsved the news
+  
+  // SEO fields
+  metaTitle       String?
+  metaDescription String?  @db.Text
+  metaKeywords    String?  @db.Text
+  ogImage         String?  // OpenGraph image URL
+  
+  // Publishing
+  publishedAt     DateTime?
+  scheduledAt     DateTime? // For scheduled publishing
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  author          User     @relation("NewsAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  editor          User?    @relation("NewsEditor", fields: [editorId], references: [id], onDelete: SetNull)
+  categories     NewsCategory[] // Many-to-many with Menu (categories)
+  newsViews      NewsView[] // Track individual views
+  advertisements Advertisement[] // Ads associated with this news
+  comments       Comment[] // Comments on this news post
+
+  @@index([authorId])
+  @@index([editorId])
+  @@index([slug])
+  @@index([isPublished])
+  @@index([isActive])
+  @@index([isBreaking])
+  @@index([isFeatured])
+  @@index([publishedAt])
+  @@index([createdAt])
+  @@map("news")
+}
+
+// Junction table: News <-> Menu (Many-to-Many for categories)
+model NewsCategory {
+  id        String   @id @default(cuid())
+  newsId    String
+  menuId    String   // Menu acts as category
+  createdAt DateTime @default(now())
+
+  // Relations
+  news      News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  @@unique([newsId, menuId])
+  @@index([newsId])
+  @@index([menuId])
+  @@map("news_categories")
+}
+
+// Media model - Cloudinary media files
+model Media {
+  id          String   @id @default(cuid())
+  name        String
+  url         String   // Cloudinary URL
+  publicId    String   // Cloudinary public ID
+  format      String   // jpg, png, mp4, etc.
+  resourceType String  // image, video, raw
+  bytes       Int?     // File size in bytes
+  width       Int?     // Image/video width
+  height      Int?     // Image/video height
+  duration    Int?     // Video duration in seconds
+  folder      String?  // Cloudinary folder path
+  tags        String[] // Tags for organization
+  uploadedBy  String   // User who uploaded
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  uploader    User     @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+
+  @@index([uploadedBy])
+  @@index([resourceType])
+  @@index([folder])
+  @@index([createdAt])
+  @@map("media")
+}
+
+// Advertisement/Sponsor model
+model Advertisement {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  imageUrl    String   // Cloudinary URL
+  linkUrl     String?  // Click destination URL
+  zone        String   // Placement zone: header, sidebar, footer, inline, etc.
+  position    Int      @default(0) // Order within zone
+  isActive    Boolean  @default(true)
+  startDate   DateTime
+  endDate     DateTime
+  clicks      Int      @default(0)
+  impressions Int      @default(0)
+  authorId    String   // User who created the ad
+  newsId      String?  // Associated news post (optional)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  news        News?    @relation(fields: [newsId], references: [id], onDelete: SetNull)
+
+  @@index([authorId])
+  @@index([zone])
+  @@index([isActive])
+  @@index([startDate])
+  @@index([endDate])
+  @@index([createdAt])
+  @@map("advertisements")
+}
+
+// Visit tracking model - Track daily visits by IP
+model Visit {
+  id          String   @id @default(cuid())
+  ipAddress   String
+  userAgent   String?
+  referer     String?
+  path        String   // Page path visited
+  country     String?
+  city        String?
+  device      String?  // mobile, desktop, tablet
+  browser     String?
+  os          String?
+  visitedAt   DateTime @default(now())
+
+  @@index([ipAddress])
+  @@index([path])
+  @@index([visitedAt])
+  @@map("visits")
+}
+
+// News view tracking - Track individual news post views
+model NewsView {
+  id          String   @id @default(cuid())
+  newsId      String
+  ipAddress   String
+  userAgent   String?
+  referer     String?
+  country     String?
+  city        String?
+  device      String?
+  viewedAt    DateTime @default(now())
+
+  // Relations
+  news        News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@index([newsId])
+  @@index([ipAddress])
+  @@index([viewedAt])
+  @@map("news_views")
+}
+
+// Comment model - User comments on news posts
+model Comment {
+  id          String   @id @default(cuid())
+  newsId      String
+  parentId    String?  // For nested/reply comments
+  authorName  String   // Commenter name (can be anonymous)
+  authorEmail String?  // Optional email
+  content     String   @db.Text
+  isApproved  Boolean  @default(true) // Auto-approve, but can be moderated
+  isSpam      Boolean  @default(false)
+  isVulgar    Boolean  @default(false) // Flagged for vulgar content
+  ipAddress   String?
+  userAgent   String?
+  likes       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  moderatedAt DateTime?
+  moderatedBy String? // User ID who moderated
+
+  // Relations
+  news        News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  parent      Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[] @relation("CommentReplies")
+
+  @@index([newsId])
+  @@index([parentId])
+  @@index([isApproved])
+  @@index([isSpam])
+  @@index([isVulgar])
+  @@index([createdAt])
+  @@map("comments")
+}
