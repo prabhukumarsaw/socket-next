@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { redirect } from "next/navigation";
 import { getProfile } from "@/lib/actions/profile";
 import { ProfileForm } from "@/components/profile/profile-form";

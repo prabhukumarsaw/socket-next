@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { checkPermission } from "@/lib/auth/permissions";
 import { getAuditLogs } from "@/lib/audit-log";
 import { redirect } from "next/navigation";

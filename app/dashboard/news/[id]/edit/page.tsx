@@ -49,7 +49,7 @@
 
 
 
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { checkPermission } from "@/lib/auth/permissions";
 import { getNewsById } from "@/lib/actions/news";
 import { redirect } from "next/navigation";

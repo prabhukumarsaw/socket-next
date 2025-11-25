@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { checkPermission } from "@/lib/auth/permissions";
 import { redirect } from "next/navigation";
 import { CreateAdvertisementForm } from "@/components/advertisements/create-advertisement-form";

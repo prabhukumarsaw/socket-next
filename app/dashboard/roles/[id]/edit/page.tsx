@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth/jwt";
+import { getCurrentUser } from "@/lib/auth/jwt-server";
 import { checkPermission } from "@/lib/auth/permissions";
 import { getRoleById } from "@/lib/actions/roles";
 import { getPermissions } from "@/lib/actions/permissions";
