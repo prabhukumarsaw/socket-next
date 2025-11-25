@@ -10,6 +10,7 @@ import { RelatedPosts } from "./_components/related-posts"
 import { CommentsSection } from "./_components/comments-section"
 import { SocialSidebar } from "./_components/social-sidebar"
 import { AdInline } from "@/components/ads/ad-inline"
+import { ArticleRightSidebar } from "./_components/article-right-sidebar"
 import type { Article } from "@/constants/news-data"
 
 export const revalidate = 60
@@ -138,10 +139,10 @@ export default async function Page({ params, searchParams }: PageProps) {
             </div>
           </div>
 
-          {/* Right Sidebar - Optional for ads or related content */}
+          {/* Right Sidebar - Live Scores and Ads */}
           <div className="hidden xl:block shrink-0 w-64">
-            <div className="sticky top-24 space-y-6">
-              {/* Placeholder for right sidebar content */}
+            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto">
+              <ArticleRightSidebar />
             </div>
           </div>
         </div>

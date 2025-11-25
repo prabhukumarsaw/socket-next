@@ -5,28 +5,48 @@
  * 
  * Usage:
  * 1. Set MYSQL_DATABASE_URL in .env file
- * 2. Ensure default author exists in PostgreSQL
- * 3. Run: npm run migrate:mysql
+ * 2. Set MYSQL_IMAGE_BASE_URL (optional, for HTTP/HTTPS images)
+ * 3. Set MYSQL_IMAGE_LOCAL_PATH (optional, for local file system - faster)
+ * 4. Ensure default author exists in PostgreSQL
+ * 5. Run: npm run migrate:mysql
  * 
  * Field Mapping:
  * - post_title → title
  * - post_name → slug (or generate from title)
  * - post_summary → excerpt
  * - post_content → content (convert to Lexical JSON if needed)
- * - post_image → coverImage (construct full URL)
+ * - post_image → coverImage (download and save to local storage)
+ * 
+ * Image Migration:
+ * - Images are downloaded from old system and saved to /storage/media/migrated/
+ * - Set MYSQL_IMAGE_BASE_URL for HTTP/HTTPS image URLs (e.g., http://old-site.com/storage/images/)
+ * - Set MYSQL_IMAGE_LOCAL_PATH for local file system path (e.g., /var/www/old-site/storage/images/)
+ * - Images are optimized and compressed during migration
+ * - Failed images will use DEFAULT_NEWS_IMAGE
  */
 
 import { PrismaClient } from '@prisma/client';
 import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
+import { uploadToLocalStorage, sanitizeFilename, generateUniqueFilename } from '../lib/storage/local-storage';
+import path from 'path';
+import fs from 'fs/promises';
+import https from 'https';
+import http from 'http';
 
 const prisma = new PrismaClient();
 
 const DEFAULT_NEWS_IMAGE =
   process.env.DEFAULT_NEWS_IMAGE ||
-  '/saturn-planet-space.jpg';
+  '/storage/media/uploads/default-news.jpg';
 const MYSQL_IMAGE_BASE_URL = (
   process.env.MYSQL_IMAGE_BASE_URL || 'http://localhost:3000/storage/images/'
 ).replace(/\/+$/, '');
+
+// Local file path for images (if migrating from local filesystem)
+const MYSQL_IMAGE_LOCAL_PATH = process.env.MYSQL_IMAGE_LOCAL_PATH || '';
+
+// Local storage path for migrated images
+const MIGRATED_IMAGES_FOLDER = 'migrated';
 
 // Configuration
 interface MySQLConfig {
@@ -203,7 +223,187 @@ function convertContentToLexical(htmlContent: string | null | undefined): string
 }
 
 /**
- * Construct image URL from image name with automatic fallback to default image
+ * Download image from URL and return as Buffer
+ */
+async function downloadImage(url: string, timeout: number = 10000): Promise<Buffer | null> {
+  return new Promise((resolve) => {
+    try {
+      const protocol = url.startsWith('https') ? https : http;
+      
+      const request = protocol.get(url, {
+        timeout,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; MigrationBot/1.0)',
+        },
+      }, (response) => {
+        // Handle redirects
+        if (response.statusCode === 301 || response.statusCode === 302) {
+          const redirectUrl = response.headers.location;
+          if (redirectUrl) {
+            return resolve(downloadImage(redirectUrl, timeout));
+          }
+        }
+
+        if (response.statusCode !== 200) {
+          return resolve(null);
+        }
+
+        const chunks: Buffer[] = [];
+        response.on('data', (chunk) => chunks.push(chunk));
+        response.on('end', () => {
+          resolve(Buffer.concat(chunks));
+        });
+      });
+
+      request.on('error', () => resolve(null));
+      request.on('timeout', () => {
+        request.destroy();
+        resolve(null);
+      });
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+/**
+ * Read image from local file system (if MYSQL_IMAGE_LOCAL_PATH is set)
+ */
+async function readImageFromLocal(imagePath: string): Promise<Buffer | null> {
+  if (!MYSQL_IMAGE_LOCAL_PATH) {
+    return null;
+  }
+
+  try {
+    // Construct full path
+    const fullPath = path.join(MYSQL_IMAGE_LOCAL_PATH, imagePath);
+    
+    // Security: Ensure path is within the allowed directory
+    const normalizedPath = path.normalize(fullPath);
+    const normalizedBase = path.normalize(MYSQL_IMAGE_LOCAL_PATH);
+    
+    if (!normalizedPath.startsWith(normalizedBase)) {
+      console.log(`  ⚠️  Path traversal detected: ${imagePath}`);
+      return null;
+    }
+
+    // Check if file exists
+    const stats = await fs.stat(normalizedPath);
+    if (!stats.isFile()) {
+      return null;
+    }
+
+    // Read file
+    const buffer = await fs.readFile(normalizedPath);
+    return buffer;
+  } catch (error: any) {
+    // File doesn't exist or can't be read
+    return null;
+  }
+}
+
+/**
+ * Migrate image from old system to local storage
+ * Downloads the image and saves it locally, returns the new relative URL
+ */
+async function migrateImage(
+  imageName: string | null | undefined,
+  postId: number
+): Promise<string> {
+  // If no image name, return default
+  if (!imageName || imageName.trim() === '') {
+    return DEFAULT_NEWS_IMAGE;
+  }
+
+  const cleaned = imageName.trim();
+
+  // If it's already a local path (starts with /storage/), return as is
+  if (cleaned.startsWith('/storage/')) {
+    return cleaned;
+  }
+
+  let imageBuffer: Buffer | null = null;
+
+  // Try to read from local file system first (if MYSQL_IMAGE_LOCAL_PATH is set)
+  if (MYSQL_IMAGE_LOCAL_PATH) {
+    const localPath = cleaned.startsWith('/') ? cleaned.substring(1) : cleaned;
+    imageBuffer = await readImageFromLocal(localPath);
+    
+    if (imageBuffer) {
+      console.log(`  📁 Found image in local path: ${cleaned.substring(0, 60)}...`);
+    }
+  }
+
+  // If not found locally, try to download from URL
+  if (!imageBuffer) {
+    // Construct source URL
+    let sourceUrl: string;
+    if (/^https?:\/\//i.test(cleaned)) {
+      sourceUrl = cleaned;
+    } else {
+      const imagePath = cleaned.startsWith('/') ? cleaned.substring(1) : cleaned;
+      sourceUrl = `${MYSQL_IMAGE_BASE_URL}/${imagePath}`;
+    }
+
+    try {
+      console.log(`  📥 Downloading image: ${sourceUrl.substring(0, 80)}...`);
+      imageBuffer = await downloadImage(sourceUrl);
+    } catch (error: any) {
+      console.log(`  ⚠️  Download failed: ${error.message}`);
+    }
+  }
+
+  // If still no image, use default
+  if (!imageBuffer || imageBuffer.length === 0) {
+    console.log(`  ⚠️  Image not found, using default`);
+    return DEFAULT_NEWS_IMAGE;
+  }
+
+  // Validate it's actually an image (check magic bytes)
+  const isValidImage = 
+    (imageBuffer[0] === 0xFF && imageBuffer[1] === 0xD8 && imageBuffer[2] === 0xFF) || // JPEG
+    (imageBuffer[0] === 0x89 && imageBuffer[1] === 0x50 && imageBuffer[2] === 0x4E && imageBuffer[3] === 0x47) || // PNG
+    (imageBuffer[0] === 0x47 && imageBuffer[1] === 0x49 && imageBuffer[2] === 0x46) || // GIF
+    (imageBuffer[0] === 0x52 && imageBuffer[1] === 0x49 && imageBuffer[2] === 0x46 && imageBuffer[3] === 0x46); // WebP
+
+  if (!isValidImage) {
+    console.log(`  ⚠️  Invalid image format, using default`);
+    return DEFAULT_NEWS_IMAGE;
+  }
+
+  try {
+    // Generate filename from original image name
+    const originalFilename = path.basename(cleaned);
+    const sanitized = sanitizeFilename(originalFilename);
+    
+    // Use generateUniqueFilename to ensure uniqueness
+    const uniqueFilename = generateUniqueFilename(sanitized);
+
+    // Upload to local storage
+    const result = await uploadToLocalStorage(
+      imageBuffer,
+      originalFilename,
+      {
+        folder: MIGRATED_IMAGES_FOLDER,
+        quality: 85,
+        maxWidth: 1920,
+        maxHeight: 1080,
+        generateBlur: false, // Skip blur for migration to speed up
+      }
+    );
+
+    console.log(`  ✅ Image migrated: ${result.url}`);
+    return result.url;
+
+  } catch (error: any) {
+    console.log(`  ⚠️  Error saving image: ${error.message}, using default`);
+    return DEFAULT_NEWS_IMAGE;
+  }
+}
+
+/**
+ * Construct image URL from image name (legacy function, now uses migrateImage)
+ * @deprecated Use migrateImage instead
  */
 function constructImageUrl(imageName: string | null | undefined): string {
   if (!imageName || imageName.trim() === '') {
@@ -218,9 +418,9 @@ function constructImageUrl(imageName: string | null | undefined): string {
   }
 
   // Remove leading slash if present
-  const path = cleaned.startsWith('/') ? cleaned.substring(1) : cleaned;
+  const imagePath = cleaned.startsWith('/') ? cleaned.substring(1) : cleaned;
 
-  return `${MYSQL_IMAGE_BASE_URL}/${path}`;
+  return `${MYSQL_IMAGE_BASE_URL}/${imagePath}`;
 }
 
 /**
@@ -363,7 +563,7 @@ async function newsExists(slug: string, title: string): Promise<boolean> {
 async function migratePost(
   post: MySQLPost,
   defaultAuthorId: string,
-  stats: { success: number; skipped: number; errors: number }
+  stats: { success: number; skipped: number; errors: number; imagesMigrated: number; imagesFailed: number }
 ): Promise<void> {
   try {
     // Clean and validate data
@@ -399,8 +599,22 @@ async function migratePost(
     // Convert content to Lexical format
     const content = convertContentToLexical(post.post_content);
     
-    // Construct image URL
-    const coverImage = constructImageUrl(post.post_image);
+    // Migrate image to local storage
+    let coverImage = DEFAULT_NEWS_IMAGE;
+    if (post.post_image && post.post_image.trim()) {
+      try {
+        coverImage = await migrateImage(post.post_image, post.id);
+        if (coverImage !== DEFAULT_NEWS_IMAGE) {
+          stats.imagesMigrated++;
+        } else {
+          stats.imagesFailed++;
+        }
+      } catch (error: any) {
+        console.log(`  ⚠️  Image migration failed for post ${post.id}: ${error.message}`);
+        stats.imagesFailed++;
+        // Continue with default image
+      }
+    }
     
     // Clean dates
     const createdAt = cleanDate(post.created_at);
@@ -486,20 +700,25 @@ async function migrateMySQLToPostgreSQL() {
     const stats = {
       success: 0,
       skipped: 0,
-      errors: 0
+      errors: 0,
+      imagesMigrated: 0,
+      imagesFailed: 0
     };
 
     // Process posts in batches to avoid overwhelming the database
-    const BATCH_SIZE = 50;
+    const BATCH_SIZE = 20; // Reduced batch size to handle image downloads
     for (let i = 0; i < posts.length; i += BATCH_SIZE) {
       const batch = posts.slice(i, i + BATCH_SIZE);
       console.log(`\n📦 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(posts.length / BATCH_SIZE)}...`);
 
-      // Process batch in parallel (limited concurrency)
-      const batchPromises = batch.map(post => migratePost(post, defaultAuthorId, stats));
-      await Promise.all(batchPromises);
+      // Process batch sequentially to avoid overwhelming image server
+      for (const post of batch) {
+        await migratePost(post, defaultAuthorId, stats);
+        // Small delay between posts to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
 
-      // Small delay between batches
+      // Delay between batches
       if (i + BATCH_SIZE < posts.length) {
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
@@ -513,6 +732,8 @@ async function migrateMySQLToPostgreSQL() {
     console.log(`⏭️  Skipped (duplicates/invalid): ${stats.skipped} posts`);
     console.log(`❌ Errors: ${stats.errors} posts`);
     console.log(`📊 Total processed: ${posts.length} posts`);
+    console.log(`🖼️  Images migrated: ${stats.imagesMigrated} images`);
+    console.log(`⚠️  Images failed/using default: ${stats.imagesFailed} images`);
     console.log('='.repeat(60));
 
   } catch (error: any) {

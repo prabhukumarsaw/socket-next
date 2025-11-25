@@ -45,23 +45,25 @@ const MOCK_MATCHES: Match[] = [
 
 export function LiveScoreWidget() {
   return (
-    <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 overflow-hidden">
-      <div className="bg-green-600 px-5 py-3 flex items-center justify-between">
-        <h3 className="text-lg font-black text-white uppercase tracking-wide">Live Scores</h3>
+    <div className="bg-background rounded-xl border border-border overflow-hidden">
+      <div className="bg-primary px-4 py-3 flex items-center justify-between">
+        <h3 className="text-sm sm:text-base font-bold text-primary-foreground uppercase tracking-wide">Live Scores</h3>
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          <span className="text-xs font-bold text-white uppercase">Live</span>
+          <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
+          <span className="text-xs font-bold text-primary-foreground uppercase">Live</span>
         </div>
       </div>
 
-      <div className="divide-y divide-zinc-800">
+      <div className="divide-y divide-border">
         {MOCK_MATCHES.map((match) => (
-          <div key={match.id} className="p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer group">
+          <div key={match.id} className="p-3 sm:p-4 hover:bg-muted/50 transition-colors cursor-pointer group">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-zinc-500 font-bold uppercase">{match.league}</span>
+              <span className="text-xs text-muted-foreground font-semibold uppercase">{match.league}</span>
               <span
                 className={`text-xs font-bold px-2 py-0.5 rounded ${
-                  match.status === "Live" ? "bg-red-500/20 text-red-500" : "bg-zinc-800 text-zinc-400"
+                  match.status === "Live" 
+                    ? "bg-destructive/20 text-destructive dark:bg-destructive/30" 
+                    : "bg-muted text-muted-foreground"
                 }`}
               >
                 {match.status === "Live" ? match.time : match.status}
@@ -71,16 +73,16 @@ export function LiveScoreWidget() {
             <div className="flex items-center justify-between">
               <div className="flex-1 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-300 font-medium group-hover:text-white transition-colors">
+                  <span className="text-sm text-foreground font-medium group-hover:text-primary transition-colors">
                     {match.home}
                   </span>
-                  <span className="text-zinc-100 font-bold">{match.homeScore}</span>
+                  <span className="text-foreground font-bold text-base">{match.homeScore}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-300 font-medium group-hover:text-white transition-colors">
+                  <span className="text-sm text-foreground font-medium group-hover:text-primary transition-colors">
                     {match.away}
                   </span>
-                  <span className="text-zinc-100 font-bold">{match.awayScore}</span>
+                  <span className="text-foreground font-bold text-base">{match.awayScore}</span>
                 </div>
               </div>
             </div>
@@ -88,8 +90,8 @@ export function LiveScoreWidget() {
         ))}
       </div>
 
-      <div className="bg-zinc-950 p-3 text-center border-t border-zinc-800">
-        <button className="text-xs font-bold text-zinc-500 hover:text-white uppercase tracking-wider transition-colors flex items-center justify-center gap-2 w-full">
+      <div className="bg-muted/30 p-3 text-center border-t border-border">
+        <button className="text-xs font-semibold text-muted-foreground hover:text-foreground uppercase tracking-wider transition-colors flex items-center justify-center gap-2 w-full">
           <Activity className="w-3 h-3" />
           View All Scores
         </button>
