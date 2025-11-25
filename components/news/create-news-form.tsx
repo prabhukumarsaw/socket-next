@@ -33,12 +33,19 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+// Custom URL validation that accepts absolute URLs, relative URLs (starting with /), or empty strings
+const urlOrEmpty = z.union([
+  z.string().url("Please enter a valid URL"),
+  z.string().regex(/^\/.*/, "Relative URL must start with /"),
+  z.literal(""),
+]).optional();
+
 const createNewsSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title must be less than 200 characters"),
   slug: z.string().min(1, "Slug is required").max(200, "Slug must be less than 200 characters").optional(),
   content: z.string().min(1, "Content is required"),
   excerpt: z.string().max(300, "Excerpt must be less than 300 characters").optional(),
-  coverImage: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
+  coverImage: urlOrEmpty,
   categoryIds: z.array(z.string()).min(1, "At least one category is required"),
   isPublished: z.boolean().default(false),
   isBreaking: z.boolean().default(false),
@@ -46,7 +53,7 @@ const createNewsSchema = z.object({
   metaTitle: z.string().max(60, "Meta title should be under 60 characters").optional(),
   metaDescription: z.string().max(160, "Meta description should be under 160 characters").optional(),
   metaKeywords: z.string().optional(),
-  ogImage: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
+  ogImage: urlOrEmpty,
   scheduledAt: z.string().datetime().optional(),
   isScheduled: z.boolean().default(false),
 });

@@ -32,7 +32,7 @@ interface Media {
   folder: string | null
   tags: string[]
   uploader: { id: string; username: string; email: string; firstName: string | null; lastName: string | null }
-  createdAt: Date
+  createdAt: Date | string // Accept both Date (server) and string (serialized)
 }
 
 interface MediaLibraryProps {
