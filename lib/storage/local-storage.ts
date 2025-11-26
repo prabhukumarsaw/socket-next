@@ -187,7 +187,7 @@ export async function uploadToLocalStorage(
     // Detect mime type from extension
     const ext = path.extname(originalName).toLowerCase();
     mimeType = Object.entries(ALLOWED_TYPES).find(([, exts]) => 
-      exts.includes(ext as any)
+      exts.includes(ext as never)
     )?.[0] || "application/octet-stream";
   }
 

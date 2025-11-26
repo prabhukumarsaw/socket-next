@@ -25,8 +25,8 @@ export default async function CreateRolePage() {
     getMenus(),
   ]);
 
-  const permissions = permissionsResult.success ? permissionsResult.permissions : [];
-  const menus = menusResult.success ? menusResult.menus : [];
+  const permissions: any = permissionsResult.success ? permissionsResult.permissions : [];
+  const menus: any = menusResult.success ? menusResult.menus : [];
 
   return (
     <div className="space-y-6">

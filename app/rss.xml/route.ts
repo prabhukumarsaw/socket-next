@@ -39,12 +39,12 @@ export async function GET() {
   })
 
   // Generate RSS XML
-  const rssItems = news.map((item) => {
+  const rssItems = news.map((item: typeof news[number]) => {
     const authorName = item.author
       ? `${item.author.firstName || ''} ${item.author.lastName || ''}`.trim() || item.author.username
       : 'Bawal News'
     
-    const categories = item.categories.map((cat) => cat.menu.name).join(', ')
+    const categories = item.categories.map((cat: typeof item.categories[number]) => cat.menu.name).join(', ')
     const excerpt = item.excerpt || item.content.substring(0, 200).replace(/<[^>]*>/g, '') + '...'
     const content = item.content.replace(/<[^>]*>/g, '').substring(0, 500) + '...'
     const imageUrl = item.coverImage || `${baseUrl}/placeholder.png`

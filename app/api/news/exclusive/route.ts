@@ -4,7 +4,7 @@
  * 
  * GET /api/news/exclusive?limit=4
  */
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getCachedFeaturedNews } from "@/lib/services/news-api.service";
 import { mapArrayToExclusiveNewsItems } from "@/lib/utils/category-section-mapper";

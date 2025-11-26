@@ -36,7 +36,7 @@ export async function hasPermission(
 
   // Check if user is superadmin
   const isSuperadmin = userRoles.some(
-    (ur) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
+    (ur: any) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
   );
 
   if (isSuperadmin) return true;
@@ -46,7 +46,7 @@ export async function hasPermission(
     if (!userRole.role.isActive) continue;
 
     const hasPermission = userRole.role.permissions.some(
-      (rp) => rp.permission.slug === permissionSlug && rp.permission.isActive
+      (rp: any) => rp.permission.slug === permissionSlug && rp.permission.isActive
     );
 
     if (hasPermission) return true;
@@ -79,7 +79,7 @@ export async function hasMenuAccess(userId: string, menuSlug: string): Promise<b
   });
 
   const isSuperadmin = userRoles.some(
-    (ur) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
+    (ur: any) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
   );
 
   if (isSuperadmin) return true;
@@ -89,7 +89,7 @@ export async function hasMenuAccess(userId: string, menuSlug: string): Promise<b
     if (!userRole.role.isActive) continue;
 
     const hasAccess = userRole.role.menus.some(
-      (rm) => rm.menu.slug === menuSlug && rm.menu.isActive
+      (rm: any) => rm.menu.slug === menuSlug && rm.menu.isActive
     );
 
     if (hasAccess) return true;
@@ -120,7 +120,7 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
   });
 
   const isSuperadmin = userRoles.some(
-    (ur) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
+    (ur: any) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
   );
 
   if (isSuperadmin) {
@@ -129,7 +129,7 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
       where: { isActive: true },
       select: { slug: true },
     });
-    return allPermissions.map((p) => p.slug);
+    return allPermissions.map((p: any) => p.slug);
   }
 
   // Collect unique permissions from user's roles
@@ -137,7 +137,7 @@ export async function getUserPermissions(userId: string): Promise<string[]> {
   for (const userRole of userRoles) {
     if (!userRole.role.isActive) continue;
 
-    userRole.role.permissions.forEach((rp) => {
+    userRole.role.permissions.forEach((rp: any) => {
       if (rp.permission.isActive) {
         permissions.add(rp.permission.slug);
       }
@@ -173,7 +173,7 @@ export async function getUserMenus(userId: string) {
   });
 
   const isSuperadmin = userRoles.some(
-    (ur) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
+    (ur: any) => ur.role.slug === SUPERADMIN_ROLE && ur.role.isActive
   );
 
   if (isSuperadmin) {
@@ -201,7 +201,7 @@ export async function getUserMenus(userId: string) {
   for (const userRole of userRoles) {
     if (!userRole.role.isActive) continue;
 
-    userRole.role.menus.forEach((rm) => {
+    userRole.role.menus.forEach((rm: any) => {
       // Only include non-public menus for dashboard navigation
       if (rm.menu.isActive && !rm.menu.isPublic && !menuMap.has(rm.menu.id)) {
         menuMap.set(rm.menu.id, rm.menu);
@@ -210,7 +210,7 @@ export async function getUserMenus(userId: string) {
   }
 
   // Filter children to exclude public menus
-  const filteredMenus = Array.from(menuMap.values()).map((menu) => ({
+  const filteredMenus = Array.from(menuMap.values()).map((menu: any) => ({
     ...menu,
     children: menu.children?.filter((child: any) => !child.isPublic) || [],
   }));

@@ -101,7 +101,7 @@ export const getDashboardOverviewStats = cache(async () => {
           },
           select: { ipAddress: true },
         });
-        return new Set(visits.map((v) => v.ipAddress)).size;
+        return new Set(visits.map((v: any) => v.ipAddress)).size;
       })(),
       
       // Yesterday's unique visits (for comparison)
@@ -112,7 +112,7 @@ export const getDashboardOverviewStats = cache(async () => {
           },
           select: { ipAddress: true },
         });
-        return new Set(visits.map((v) => v.ipAddress)).size;
+        return new Set(visits.map((v: any) => v.ipAddress)).size;
       })(),
       
       // Today's news views
@@ -152,7 +152,7 @@ export const getDashboardOverviewStats = cache(async () => {
         
         if (views.length === 0) return null;
         
-        const newsIds = views.map((v) => v.newsId);
+        const newsIds = views.map((v: any) => v.newsId);
         const news = await prisma.news.findMany({
           where: { id: { in: newsIds } },
           select: {
@@ -163,9 +163,9 @@ export const getDashboardOverviewStats = cache(async () => {
           },
         });
         
-        return news.map((n) => ({
+        return news.map((n: any) => ({
           ...n,
-          views: views.find((v) => v.newsId === n.id)?._count.id || 0,
+          views: views.find((v: any) => v.newsId === n.id)?._count.id || 0,
         }));
       })(),
     ]);

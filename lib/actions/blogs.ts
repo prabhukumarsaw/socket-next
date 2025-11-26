@@ -295,7 +295,7 @@ export async function getUserBlogs(page: number = 1, limit: number = 10, search?
 
     return {
       success: true,
-      blogs: blogs.map((blog) => ({
+      blogs: blogs.map((blog: any) => ({
         id: blog.id,
         title: blog.title,
         slug: blog.slug,

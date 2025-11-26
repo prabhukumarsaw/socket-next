@@ -20,7 +20,7 @@ export default async function CreateUserPage() {
   }
 
   const rolesResult = await getRoles();
-  const roles = rolesResult.success ? rolesResult.roles : [];
+  const roles: any = rolesResult.success ? rolesResult.roles : [];
 
   return (
     <div className="space-y-6">

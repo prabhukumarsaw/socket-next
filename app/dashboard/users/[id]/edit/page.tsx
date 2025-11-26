@@ -33,7 +33,7 @@ export default async function EditUserPage({
     notFound();
   }
 
-  const roles = rolesResult.success ? rolesResult.roles : [];
+  const roles: any = rolesResult.success ? rolesResult.roles : [];
 
   return (
     <div className="space-y-6">

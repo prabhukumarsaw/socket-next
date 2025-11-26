@@ -292,18 +292,18 @@ export async function getRoles() {
 
     return {
       success: true,
-      roles: roles.map((role) => ({
+      roles: roles.map((role: any) => ({
         id: role.id,
         name: role.name,
         slug: role.slug,
         description: role.description,
         isActive: role.isActive,
-        permissions: role.permissions.map((rp) => ({
+        permissions: role.permissions.map((rp: any) => ({
           id: rp.permission.id,
           name: rp.permission.name,
           slug: rp.permission.slug,
         })),
-        menus: role.menus.map((rm) => ({
+        menus: role.menus.map((rm: any) => ({
           id: rm.menu.id,
           name: rm.menu.name,
           slug: rm.menu.slug,
@@ -361,8 +361,8 @@ export async function getRoleById(roleId: string) {
         slug: role.slug,
         description: role.description,
         isActive: role.isActive,
-        permissionIds: role.permissions.map((rp) => rp.permission.id),
-        menuIds: role.menus.map((rm) => rm.menu.id),
+        permissionIds: role.permissions.map((rp: any) => rp.permission.id),
+        menuIds: role.menus.map((rm: any) => rm.menu.id),
       },
     };
   } catch (error) {

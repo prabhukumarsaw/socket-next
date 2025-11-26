@@ -4,7 +4,7 @@
  * 
  * GET /api/news/top-trending?limit=5
  */
-
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { getCachedMostViewedNews } from "@/lib/services/news-api.service";
 import { mapArrayToTopTrendingItems } from "@/lib/utils/category-section-mapper";

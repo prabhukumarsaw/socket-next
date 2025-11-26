@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
   images: {
     // Allow local images and optional CDN
     remotePatterns: [

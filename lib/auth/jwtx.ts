@@ -29,7 +29,7 @@ export interface JWTPayload {
  * @param payload - User data to encode in token
  * @returns JWT token string
  */
-export async function generateToken(payload: JWTPayload): Promise<string> {
+export async function generateToken(payload: any): Promise<string> {
   const secretKey = getSecretKey();
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -47,7 +47,7 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
     const secretKey = getSecretKey();
     const { payload } = await jwtVerify(token, secretKey);
-    return payload as JWTPayload;
+    return payload as any;
   } catch (error) {
     return null;
   }

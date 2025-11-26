@@ -226,7 +226,7 @@ export async function getPermissions() {
 
     return {
       success: true,
-      permissions: permissions.map((permission) => ({
+      permissions: permissions.map((permission: any) => ({
         id: permission.id,
         name: permission.name,
         slug: permission.slug,
@@ -309,7 +309,7 @@ export async function getPermissionsByResource() {
     });
 
     // Group by resource
-    const grouped = permissions.reduce((acc, permission) => {
+    const grouped = permissions.reduce((acc: any, permission: any) => {
       if (!acc[permission.resource]) {
         acc[permission.resource] = [];
       }

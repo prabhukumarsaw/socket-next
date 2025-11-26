@@ -310,7 +310,7 @@ export async function searchNews(options: SearchOptions): Promise<SearchResponse
   });
 
   // Calculate relevance scores and add highlights
-  const results: SearchResult[] = news.map((item) => {
+  const results: SearchResult[] = news.map((item: any) => {
     const relevanceScore = calculateRelevanceScore(item, query, queryLower);
     
     return {

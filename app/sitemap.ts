@@ -92,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   // News posts
-  const newsPages: MetadataRoute.Sitemap = news.map((item) => ({
+  const newsPages: MetadataRoute.Sitemap = news.map((item: typeof news[number]) => ({
     url: `${baseUrl}/news/${item.slug}`,
     lastModified: item.updatedAt,
     changeFrequency: 'daily' as const,
@@ -100,7 +100,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // Category pages
-  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
+  const categoryPages: MetadataRoute.Sitemap = categories.map((category: typeof categories[number]) => ({
     url: `${baseUrl}/${category.slug}`,
     lastModified: category.updatedAt,
     changeFrequency: 'daily' as const,

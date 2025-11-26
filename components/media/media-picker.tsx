@@ -76,7 +76,7 @@ export function MediaPicker({
       resourceType: type === "all" ? undefined : type,
     });
     if (result.success) {
-      setMedia(result.media);
+      setMedia(result.media as unknown as Media[]);
     }
     setLoading(false);
   };

@@ -205,7 +205,7 @@ export async function getProfile() {
         lastName: user.lastName,
         avatar: user.avatar,
         isActive: user.isActive,
-        roles: user.roles.map((ur) => ({
+        roles: user.roles.map((ur: any) => ({
           id: ur.role.id,
           name: ur.role.name,
           slug: ur.role.slug,

@@ -46,7 +46,7 @@ export const getDailyNewsPostCounts = cache(async (days: number = 30) => {
 
     // Group by date
     const dailyCounts: Record<string, number> = {};
-    news.forEach((item) => {
+    news.forEach((item: any) => {
       const date = item.createdAt.toISOString().split("T")[0];
       dailyCounts[date] = (dailyCounts[date] || 0) + 1;
     });
@@ -125,7 +125,7 @@ export const getNewsByAuthorDistribution = cache(async () => {
 
     // Group by author
     const authorCounts: Record<string, { count: number; author: any }> = {};
-    news.forEach((item) => {
+    news.forEach((item: any) => {
       const authorId = item.author?.id || "unknown";
       const authorName = getDisplayName(item.author);
       
@@ -202,7 +202,7 @@ export const getNewsViewsByDeviceType = cache(async (days: number = 30) => {
     // Group by date and device type
     const dailyDeviceCounts: Record<string, Record<string, number>> = {};
     
-    visits.forEach((visit) => {
+    visits.forEach((visit: any) => {
       const date = visit.visitedAt.toISOString().split("T")[0];
       const device = visit.device || "unknown";
       
@@ -228,7 +228,7 @@ export const getNewsViewsByDeviceType = cache(async (days: number = 30) => {
       };
 
       // Initialize all device types to 0
-      deviceTypes.forEach((device) => {
+      deviceTypes.forEach((device: any) => {
         dateData[device] = 0;
       });
 
@@ -333,7 +333,7 @@ export const getTopRecentNews = cache(async (limit: number = 5) => {
       return (author.username || author.email || "U").charAt(0).toUpperCase();
     };
 
-    const result = news.map((item) => {
+    const result = news.map((item: any) => {
       const authorName = getDisplayName(item.author);
       return {
         id: item.id,

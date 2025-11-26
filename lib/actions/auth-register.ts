@@ -80,7 +80,7 @@ export async function register(data: z.infer<typeof registerSchema>) {
     const hashedPassword = await bcrypt.hash(validated.password, 12);
 
     // Get citizen role in transaction to ensure data consistency
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       // Get citizen role
       const citizenRole = await tx.role.findUnique({
         where: { slug: "citizen" },

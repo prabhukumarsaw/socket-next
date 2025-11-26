@@ -74,7 +74,7 @@ export async function getMenus() {
 
     return {
       success: true,
-      menus: menus.map((menu) => ({
+      menus: menus.map((menu: any) => ({
         id: menu.id,
         name: menu.name,
         slug: menu.slug,
@@ -420,7 +420,7 @@ export async function getPublicMenus() {
 
     return {
       success: true,
-      menus: menus.map((menu) => ({
+      menus: menus.map((menu: any) => ({
         id: menu.id,
         name: menu.name,
         slug: menu.slug,

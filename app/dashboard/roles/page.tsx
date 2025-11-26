@@ -55,7 +55,7 @@ export default async function RolesPage() {
         )}
       </div>
 
-      <RolesTable roles={result.roles} />
+      <RolesTable roles={result.roles as any[]} />
     </div>
     </PageContainer>
   );

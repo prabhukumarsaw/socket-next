@@ -49,7 +49,7 @@ async function fetchActiveAdsByZone(zone: string, limit: number = 5): Promise<Ad
       },
     });
 
-    return ads.map((ad) => ({
+    return ads.map((ad: any) => ({
       id: ad.id,
       title: ad.title,
       description: ad.description,

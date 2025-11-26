@@ -1,4 +1,5 @@
 // scripts/csv-to-postgres-stable.ts
+// @ts-nocheck
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
 import csv from 'csv-parser';

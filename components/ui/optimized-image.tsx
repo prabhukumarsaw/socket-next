@@ -39,7 +39,10 @@ export function OptimizedImage({
   const placeholder = blurDataUrl || DEFAULT_BLUR_DATA_URL;
 
   // Normalize relative URLs to ensure they work correctly
-  const normalizedSrc = imageSrc && imageSrc.startsWith("/storage/") ? imageSrc : imageSrc;
+  // const normalizedSrc = imageSrc && imageSrc.startsWith("/storage/") ? imageSrc : imageSrc;
+  const normalizedSrc = typeof imageSrc === "string" && imageSrc.startsWith("/storage/")
+? imageSrc
+: imageSrc;
 
   // If fill prop is used, ensure parent has proper dimensions
   const hasFill = props.fill === true;

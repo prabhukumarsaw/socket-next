@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import KBar from '@/components/kbar';
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/jwt-server";

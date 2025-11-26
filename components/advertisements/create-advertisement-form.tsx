@@ -105,7 +105,7 @@ export function CreateAdvertisementForm() {
     async function loadNews() {
       const result = await getUserNews(1, 100);
       if (result.success && result.news) {
-        setNewsPosts(result.news.map((n) => ({ id: n.id, title: n.title })));
+        setNewsPosts(result.news.map((n: typeof result.news[number]) => ({ id: n.id, title: n.title })));
       }
     }
     loadNews();
@@ -148,6 +148,7 @@ export function CreateAdvertisementForm() {
         ...data,
         startDate: datetimeLocalToISO(data.startDate),
         endDate: datetimeLocalToISO(data.endDate),
+        imageUrl: data.imageUrl ?? "",
       };
       
       const result = await createAdvertisement(transformedData);

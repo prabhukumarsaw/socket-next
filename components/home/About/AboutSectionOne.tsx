@@ -8,8 +8,8 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 import { staticPagesData } from "@/lib/data/static-pages";
 
 const AboutSectionOne = () => {
-  const features = staticPagesData.about.sections
-    .find(section => section.type === "features")
+  const features: any = staticPagesData.about.sections
+    .find((section: any) => section.type === "features")
     ?.items?.slice(0, 4) || [];
 
   return (
@@ -30,7 +30,7 @@ const AboutSectionOne = () => {
             {/* Features Grid */}
             {features.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                {features.map((feature, index) => (
+                {features.map((feature: any, index: number) => (
                   <div key={index} className="flex items-start gap-3">
                     <div className="mt-1 flex-shrink-0">
                       <CheckCircle2 className="h-5 w-5 text-primary" />

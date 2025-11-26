@@ -124,7 +124,7 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
     async function loadNews() {
       const result = await getUserNews(1, 100);
       if (result.success) {
-        setNewsPosts(result.news.map((n) => ({ id: n.id, title: n.title })));
+        setNewsPosts(result.news?.map((n: any) => ({ id: n.id, title: n.title })) || []);
       }
     }
     loadNews();

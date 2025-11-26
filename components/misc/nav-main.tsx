@@ -18,7 +18,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem
 } from '@/components/ui/sidebar';
-import { Icon } from '@/components/icons';
+import { Icon } from '@/components/misc/icons';
 
 export function NavMain({
   items

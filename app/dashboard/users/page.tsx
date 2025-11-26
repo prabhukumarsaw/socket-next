@@ -31,8 +31,9 @@ export default async function UsersPage({
 
   const page = parseInt(searchParams.page || "1");
   const search = searchParams.search;
+  const limit = 10;
 
-  const result = await getUsers(page, 10, search);
+  const result: any = await getUsers(page, limit, search);
 
   if (!result.success) {
     return (
@@ -41,6 +42,8 @@ export default async function UsersPage({
       </div>
     );
   }
+
+  const totalPages = Math.ceil((result.total || 0) / limit);
 
   return (
     <PageContainer>
@@ -65,8 +68,8 @@ export default async function UsersPage({
       <UsersTable
         users={result.users}
         total={result.total}
-        page={result.page}
-        totalPages={result.totalPages}
+        page={page}
+        totalPages={totalPages}
         search={search}
       />
     </div>

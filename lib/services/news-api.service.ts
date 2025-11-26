@@ -139,7 +139,7 @@ async function getCategoryIds(filter: CategoryFilter): Promise<string[]> {
       categoryIds.push(parent.id);
       // Include all children
       if (parent.children) {
-        categoryIds.push(...parent.children.map((child) => child.id));
+        categoryIds.push(...parent.children.map((child: any) => child.id));
       }
     }
   } else if (filter.slug) {
@@ -157,7 +157,7 @@ async function getCategoryIds(filter: CategoryFilter): Promise<string[]> {
       categoryIds.push(category.id);
       // Include children if requested
       if (filter.includeChildren && category.children) {
-        categoryIds.push(...category.children.map((child) => child.id));
+        categoryIds.push(...category.children.map((child: any) => child.id));
       }
     }
   }
@@ -546,7 +546,7 @@ export async function getPublicCategories() {
     },
   });
 
-  return categories.map((category) => ({
+  return categories.map((category: any) => ({
     id: category.id,
     name: category.name,
     slug: category.slug,
@@ -555,7 +555,7 @@ export async function getPublicCategories() {
     parentId: category.parentId,
     order: category.order,
     newsCount: category._count.news,
-    children: category.children.map((child) => ({
+    children: category.children.map((child: any) => ({
       id: child.id,
       name: child.name,
       slug: child.slug,

@@ -27,11 +27,11 @@ export async function getPublicMenusTree() {
   const map: Record<string, any> = {};
   const roots: any[] = [];
 
-  menus.forEach((m) => {
+  menus.forEach((m:any) => {
     map[m.id] = { ...m, children: [] };
   });
 
-  menus.forEach((m) => {
+  menus.forEach((m:any) => {
     if (m.parentId && map[m.parentId]) {
       map[m.parentId].children.push(map[m.id]);
     } else {

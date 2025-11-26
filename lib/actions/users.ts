@@ -333,14 +333,14 @@ export async function getUsers(page: number = 1, limit: number = 10, search?: st
 
     return {
       success: true,
-      users: users.map((user) => ({
+      users: users.map((user: any) => ({
         id: user.id,
         email: user.email,
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
         isActive: user.isActive,
-        roles: user.roles.map((ur) => ({
+        roles: user.roles.map((ur: any) => ({
           id: ur.role.id,
           name: ur.role.name,
           slug: ur.role.slug,
@@ -399,7 +399,7 @@ export async function getUserById(userId: string) {
         firstName: user.firstName,
         lastName: user.lastName,
         isActive: user.isActive,
-        roles: user.roles.map((ur) => ({
+        roles: user.roles.map((ur: any) => ({
           id: ur.role.id,
           name: ur.role.name,
           slug: ur.role.slug,

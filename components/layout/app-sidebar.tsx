@@ -158,7 +158,7 @@ export default function AppSidebar({ menus, user }: DashboardSidebarProps) {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarMenu>
             {allMenus.map((menu) => {
-              const isActive = pathname === menu.path || (menu.path && pathname?.startsWith(menu.path + "/"));
+              const isActive = Boolean(pathname === menu.path || (menu.path && pathname?.startsWith(menu.path + "/")));
               
               // Handle menu items with children
               if (menu.children && menu.children.length > 0) {
@@ -187,7 +187,7 @@ export default function AppSidebar({ menus, user }: DashboardSidebarProps) {
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           {menu.children.map((child) => {
-                            const isChildActive = pathname === child.path || (child.path && pathname?.startsWith(child.path + "/"));
+                            const isChildActive = Boolean(pathname === child.path || (child.path && pathname?.startsWith(child.path + "/")));
                             return (
                               <SidebarMenuSubItem key={child.id}>
                                 <SidebarMenuSubButton

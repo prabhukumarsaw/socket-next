@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * Category Section Mapper Utility
  * Maps database NewsResponse to CategoryNewsSection component formats

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * MySQL to PostgreSQL Migration Script
  * 

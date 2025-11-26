@@ -150,7 +150,7 @@ export async function login(credentials: LoginCredentials) {
     });
 
     // Get user roles
-    const roles = user.roles.map((ur) => ur.role.slug);
+    const roles = user.roles.map((ur: any) => ur.role.slug);
 
     // Generate JWT token
     const token = await generateToken({
