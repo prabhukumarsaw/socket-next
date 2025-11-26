@@ -38,7 +38,7 @@ interface PermissionsTableProps {
   permissions: Permission[];
 }
 
-export function PermissionsTable({ permissions }: PermissionsTableProps) {
+export function PermissionsTable({ permissions }: any) {
   const router = useRouter();
   const { toast } = useToast();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -70,7 +70,7 @@ export function PermissionsTable({ permissions }: PermissionsTableProps) {
   };
 
   // Group permissions by resource
-  const grouped = permissions.reduce((acc, perm) => {
+  const grouped = permissions.reduce((acc:any, perm:any) => {
     if (!acc[perm.resource]) {
       acc[perm.resource] = [];
     }
@@ -81,7 +81,7 @@ export function PermissionsTable({ permissions }: PermissionsTableProps) {
   return (
     <>
       <div className="space-y-6">
-        {Object.entries(grouped).map(([resource, perms]) => (
+        {Object.entries(grouped).map(([resource, perms]:any) => (
           <div key={resource} className="rounded-md border">
             <div className="p-4 border-b bg-muted/50">
               <h3 className="font-semibold capitalize">{resource}</h3>
@@ -98,7 +98,7 @@ export function PermissionsTable({ permissions }: PermissionsTableProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {perms.map((perm) => (
+                {perms.map((perm:any) => (
                   <TableRow key={perm.id}>
                     <TableCell className="font-medium">{perm.name}</TableCell>
                     <TableCell>
