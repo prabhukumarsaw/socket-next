@@ -499,7 +499,7 @@ export function EditAdvertisementForm({ advertisement }: EditAdvertisementFormPr
                           <SelectValue placeholder="Select a news post" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">None</SelectItem>
+                          <SelectItem value="none">None</SelectItem>
                           {newsPosts.map((news) => (
                             <SelectItem key={news.id} value={news.id}>
                               {news.title}

@@ -45,7 +45,7 @@ interface MediaLibraryProps {
   error?: string
 }
 
-export function MediaLibrary({ media, total, page, totalPages, search: initialSearch, viewMode = "grid", error }: MediaLibraryProps) {
+export function MediaLibrary({ media, total, page, totalPages, search: initialSearch, viewMode = "grid", error }: any) {
   const router = useRouter()
   const { toast } = useToast()
   const [search, setSearch] = useState(initialSearch || "")
@@ -101,8 +101,8 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
   }
 
   // Stats
-  const totalSize = media.reduce((acc, m) => acc + (m.bytes || 0), 0)
-  const imageCount = media.filter(m => m.resourceType === "image").length
+  const totalSize = media.reduce((acc:any, m:any) => acc + (m.bytes || 0), 0)
+  // const imageCount = media.filter(m => m.resourceType === "image").length
 
   if (error) {
     return (
@@ -215,7 +215,7 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
               </Card>
             ) : viewMode === "grid" ? (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {media.map((item) => (
+                {media.map((item:any) => (
                   <div
                     key={item.id}
                     className="group relative bg-card border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-200 cursor-pointer"
@@ -261,7 +261,7 @@ export function MediaLibrary({ media, total, page, totalPages, search: initialSe
             ) : (
               <Card>
                 <div className="divide-y">
-                  {media.map((item) => (
+                  {media.map((item:any) => (
                     <div key={item.id} className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors group">
                       <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-background shrink-0">
                         {item.resourceType === "image" ? (

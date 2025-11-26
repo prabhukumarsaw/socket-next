@@ -291,7 +291,10 @@ const router = useRouter();
                 >
                   <Instagram className="h-4 w-4" />
                 </a>
-                <Button className="ml-2 bg-blue-600 font-semibold hover:bg-blue-700">SUBSCRIBE</Button>
+                <ModeToggle />
+                <Button
+                onClick={() => router.push("/auth/sign-in")}
+                className="ml-2 bg-blue-600 font-semibold hover:bg-blue-700">SIGN IN</Button>
               </div>
             </div>
 

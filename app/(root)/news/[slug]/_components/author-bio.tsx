@@ -34,9 +34,7 @@ export function AuthorBio({ author }: AuthorBioProps) {
           </div>
         </div>
         <p className="text-muted-foreground text-sm leading-relaxed mb-0">
-          I am an Example Writer. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat.
+          specializes in local and regional stories, bringing simple, factual, and timely updates to readers.
         </p>
       </div>
     </div>

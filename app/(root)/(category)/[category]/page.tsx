@@ -174,6 +174,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
+                size="default"
                   href={`/${encodeURIComponent(categorySlug)}?page=${Math.max(1, page - 1)}`}
                   className="hover:bg-zinc-800 hover:text-white"
                 />
@@ -185,6 +186,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                 return (
                   <PaginationItem key={p}>
                     <PaginationLink
+                     size="default"
                       href={`/${encodeURIComponent(categorySlug)}?page=${p}`}
                       isActive={isCurrent}
                       className={
@@ -201,6 +203,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
               <PaginationItem>
                 <PaginationNext
+                 size="default"
                   href={`/${encodeURIComponent(categorySlug)}?page=${Math.min(totalPages, page + 1)}`}
                   className="hover:bg-zinc-800 hover:text-white"
                 />

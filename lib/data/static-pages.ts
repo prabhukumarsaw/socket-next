@@ -1,4 +1,4 @@
-export const staticPagesData = {
+export const staticPagesData: any = {
   about: {
     title: "About Us",
     description: "Learn more about Bawal News and our mission to deliver accurate, timely, and comprehensive news coverage.",
@@ -364,5 +364,5 @@ export const staticPagesData = {
     ],
     lastUpdated: "2024-01-15"
   }
-} as const
+} 
 

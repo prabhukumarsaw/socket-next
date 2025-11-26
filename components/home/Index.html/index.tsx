@@ -25,6 +25,11 @@ export default async function Home() {
 
   return (
     <div className="space-y-6 feature-section-font ">
+         {/* BREAKING NEWS TICKER - After 5th post (featured section) */}
+      {tickerNews.length > 0 && (
+        <BreakingNewsTicker news={tickerNews} />
+      )}
+
       {/* FEATURED SECTION - Now using dynamic data */}
       <FeaturedSection
         mainFeatured={featuredData.mainFeatured}
@@ -34,11 +39,7 @@ export default async function Home() {
         breakingNews={featuredData.breakingNews}
       />
 
-      {/* BREAKING NEWS TICKER - After 5th post (featured section) */}
-      {tickerNews.length > 0 && (
-        <BreakingNewsTicker news={tickerNews} />
-      )}
-
+   
 
       {/* STATE SECTION - Now using dynamic data */}
       <ContentSidebarSection

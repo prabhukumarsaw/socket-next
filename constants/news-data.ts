@@ -373,18 +373,17 @@ export const getRelatedArticles = cache(async (currentSlug: string, category: st
 })
 
 export const CATEGORIES = [
-  "americas",
-  "world",
+  "jharkhand",
+  "bihar",
   "politics",
-  "business",
-  "economy",
+  "sports",
+  "country",
   "technology",
   "science",
   "health",
   "sports",
   "entertainment",
   "lifestyle",
-  "environment",
 ]
 
 export function isCategory(slug: string): boolean {

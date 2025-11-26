@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { ArticleSidebar } from "./_components/article-sidebar"
+import { ArticleRightSidebar } from "./_components/article-right-sidebar"
 
 export const metadata: Metadata = {
   title: "News Article | Modern News Platform",
@@ -26,6 +27,7 @@ export default function ArticleLayout({
           <aside className="w-full lg:w-1/4 space-y-8">
             <div className="lg:sticky lg:top-8">
               <ArticleSidebar />
+              {/* <ArticleRightSidebar /> */}
             </div>
           </aside>
         </div>

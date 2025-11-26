@@ -66,7 +66,7 @@ export function AdvertisementsTable({
   page, 
   totalPages, 
   search: initialSearch 
-}: AdvertisementsTableProps) {
+}: any) {
   const router = useRouter();
   const { toast } = useToast();
   const [search, setSearch] = useState(initialSearch || "");
@@ -149,7 +149,7 @@ export function AdvertisementsTable({
                   </TableCell>
                 </TableRow>
               ) : (
-                advertisements.map((ad) => (
+                advertisements.map((ad:any) => (
                   <TableRow key={ad.id}>
                     <TableCell>
                       <div className="relative w-20 h-20">

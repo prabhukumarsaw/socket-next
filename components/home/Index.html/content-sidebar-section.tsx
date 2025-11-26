@@ -307,7 +307,7 @@ export function ContentSidebarSection({
             <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-red-600 via-red-700 to-red-900 p-8 lg:p-10 text-white text-center shadow-xl">
               <div className="relative z-10 space-y-6">
                 <p className="text-xs font-bold uppercase tracking-widest opacity-90">The New</p>
-                <h3 className="text-4xl lg:text-5xl font-bold tracking-tight">SMARTMAG</h3>
+                <h3 className="text-4xl lg:text-5xl font-bold tracking-tight">BAWAL NEWS</h3>
                 <p className="text-sm opacity-90 max-w-[200px] mx-auto">
                   Trusted by over <span className="font-bold">16000</span> users worldwide
                 </p>

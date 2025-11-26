@@ -68,7 +68,7 @@ interface NewsTableProps {
   search?: string;
 }
 
-export function NewsTable({ news, total, page, totalPages, search: initialSearch }: NewsTableProps) {
+export function NewsTable({ news, total, page, totalPages, search: initialSearch }: any) {
   const router = useRouter();
   const { toast } = useToast();
   const [search, setSearch] = useState(initialSearch || "");
@@ -145,7 +145,7 @@ export function NewsTable({ news, total, page, totalPages, search: initialSearch
                   </TableCell>
                 </TableRow>
               ) : (
-                news.map((item) => (
+                news.map((item:any) => (
                   <TableRow key={item.id}>
                     <TableCell>
                       <div>
@@ -173,7 +173,7 @@ export function NewsTable({ news, total, page, totalPages, search: initialSearch
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap gap-1">
-                        {item.categories.slice(0, 2).map((cat) => (
+                        {item.categories.slice(0, 2).map((cat:any) => (
                           <Badge key={cat.menu.id} variant="outline" className="text-xs">
                             {cat.menu.name}
                           </Badge>

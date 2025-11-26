@@ -41,7 +41,7 @@ export function ArticleHeader({ article }: ArticleHeaderProps) {
       </Badge>
 
       {/* Title */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.2] mb-4 sm:mb-6 text-foreground tracking-tight font-hindi">{article.title}</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-[1.2] mb-4 sm:mb-6 text-foreground tracking-tight font-hindi">{article.title}</h1>
 
       {/* Excerpt */}
       <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-[1.7] font-hindi">{article.excerpt}</p>

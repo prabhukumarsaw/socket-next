@@ -17,7 +17,27 @@ export async function ArticleSidebar() {
   return (
     <div className="space-y-8">
       {/* Live Score Widget */}
-      <LiveScoreWidget />
+      {/* <LiveScoreWidget /> */}
+       {/* Ad Block 1 */}
+      {sidebarAds[0] && (
+        <div className="bg-zinc-900 rounded-lg overflow-hidden text-white text-center">
+          <div className="bg-zinc-800 text-xs py-1 text-zinc-400 uppercase tracking-wider">Advertisement</div>
+          <div className="p-6">
+            <h3 className="text-xl font-bold mb-4">{sidebarAds[0].title}</h3>
+            <Button className="bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full w-full">
+              {sidebarAds[0].description || "Learn More"}
+            </Button>
+            <div className="mt-6 relative h-32 w-full">
+              <Image
+                src={sidebarAds[0].image || "/placeholder.svg?height=150&width=300"}
+                alt="Ad"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Featured Topics Widget */}
       <div className="bg-card rounded-lg border border-border p-5">
@@ -27,7 +47,7 @@ export async function ArticleSidebar() {
         </h3>
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.slice(0, 8).map((tag) => (
-            <Link key={tag} href={`/news/${tag}`}>
+            <Link key={tag} href={`/${tag}`}>
               <Badge
                 variant="secondary"
                 className="hover:bg-blue-100 hover:text-blue-700 cursor-pointer px-3 py-1 rounded-md transition-all capitalize"
@@ -73,26 +93,7 @@ export async function ArticleSidebar() {
         </div>
       </div>
 
-      {/* Ad Block 1 */}
-      {sidebarAds[0] && (
-        <div className="bg-zinc-900 rounded-lg overflow-hidden text-white text-center">
-          <div className="bg-zinc-800 text-xs py-1 text-zinc-400 uppercase tracking-wider">Advertisement</div>
-          <div className="p-6">
-            <h3 className="text-xl font-bold mb-4">{sidebarAds[0].title}</h3>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full w-full">
-              {sidebarAds[0].description || "Learn More"}
-            </Button>
-            <div className="mt-6 relative h-32 w-full">
-              <Image
-                src={sidebarAds[0].image || "/placeholder.svg?height=150&width=300"}
-                alt="Ad"
-                fill
-                className="object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      )}
+     
 
       {/* Trending Widget */}
       <div className="border-t-4 border-blue-600 pt-4">

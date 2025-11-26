@@ -60,7 +60,7 @@ export default function MenusPage() {
 
   const loadMenus = async () => {
     setLoading(true);
-    const result = await getMenus();
+    const result:any = await getMenus();
     if (result.success) {
       setMenus(result.menus);
     } else {

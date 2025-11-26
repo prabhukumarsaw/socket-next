@@ -50,7 +50,7 @@ interface BlogsTableProps {
   search?: string;
 }
 
-export function BlogsTable({ blogs, total, page, totalPages, search: initialSearch }: BlogsTableProps) {
+export function BlogsTable({ blogs, total, page, totalPages, search: initialSearch }: any) {
   const router = useRouter();
   const { toast } = useToast();
   const [search, setSearch] = useState(initialSearch || "");
@@ -125,7 +125,7 @@ export function BlogsTable({ blogs, total, page, totalPages, search: initialSear
                   </TableCell>
                 </TableRow>
               ) : (
-                blogs.map((blog) => (
+                blogs.map((blog:any) => (
                   <TableRow key={blog.id}>
                     <TableCell>
                       <div>
